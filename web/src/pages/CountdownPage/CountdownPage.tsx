@@ -1,11 +1,18 @@
 import { MetaTags } from '@redwoodjs/web'
 
+import Drawer from 'src/components/Drawer/Drawer'
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
 
 const CountdownPage = () => {
   return (
     <>
       <MetaTags title="Countdown" description="Countdown page" />
+
+      <Drawer>
+        <pre>
+          <p>Some stuff</p>
+        </pre>
+      </Drawer>
 
       <div className="center  inset-0 h-screen w-screen flex-col bg-gray-950">
         <a

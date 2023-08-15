@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -51,14 +51,18 @@ const Footer = () => {
   const { pathname } = useLocation()
   const [curMenuItem, setCurMenuItem] = useState(1)
   const [isDropdownShowing, setIsDropdownShowing] = useState(false)
+  const dropdownMenuRef = useRef(null)
 
+  // set the current navigation item
   useEffect(() => {
     const curMenuOption = menuOptions.find((option) => {
       return option.slug === pathname.replace('/', '')
     })
+    if (!curMenuOption) return
     setCurMenuItem(menuOptions.indexOf(curMenuOption))
   }, [pathname])
 
+  // show / hide the dropdown menu
   const toggleMenu = () => {
     setIsDropdownShowing((prevValue) => !prevValue)
   }
@@ -72,7 +76,7 @@ const Footer = () => {
         <img src="/images/redwoodjs.svg" alt="RedwoodJS" />
       </a>
 
-      <div className="relative">
+      <div className="relative" ref={dropdownMenuRef}>
         <AnimatePresence>
           {isDropdownShowing && (
             <motion.div

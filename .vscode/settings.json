@@ -7,5 +7,10 @@
   },
   "[prisma]": {
     "editor.formatOnSave": true
-  }
+  },
+  "cSpell.words": [
+    "chevrondown",
+    "redwoodjs",
+    "Roboto"
+  ]
 }

@@ -12,18 +12,14 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import Icon from './Icon'
+import AuctionCard from './AuctionCard'
 
-const meta: Meta<typeof Icon> = {
-  component: Icon,
+const meta: Meta<typeof AuctionCard> = {
+  component: AuctionCard,
 }
 
 export default meta
 
-type Story = StoryObj<typeof Icon>
+type Story = StoryObj<typeof AuctionCard>
 
-export const ChevronDown: Story = {
-  args: {
-    name: 'ChevronDown',
-  },
-}
+export const Primary: Story = {}

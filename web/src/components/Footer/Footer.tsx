@@ -4,23 +4,23 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 import { useLocation } from '@redwoodjs/router'
 
-import { Icon } from '../Icon/Icon'
+import Icon from '../Icon/Icon'
 
 const menuOptions = [
   {
     name: 'Real Time',
     subtitle: 'Chat Demo',
-    slug: 'chat',
+    slug: '/chat',
   },
   {
     name: 'Real Time',
     subtitle: 'Auction Demo',
-    slug: 'auction',
+    slug: '/auction/1',
   },
   {
     name: 'Streaming Demo',
     subtitle: 'Countdown Timer',
-    slug: 'countdown',
+    slug: '/countdown',
   },
 ]
 
@@ -68,7 +68,7 @@ const Footer = () => {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex w-full justify-between bg-black">
+    <div className="fixed bottom-0 left-0 right-0 z-footer flex w-full justify-between bg-black">
       <a
         href="https://redwoodjs.com"
         className="block bg-black px-5 py-3 text-white"
@@ -80,7 +80,7 @@ const Footer = () => {
         <AnimatePresence>
           {isDropdownShowing && (
             <motion.div
-              className="absolute -right-5 bottom-0 z-10 min-w-[320px] bg-black pb-[52px] pl-4 pr-14 pt-4"
+              className="absolute -right-5 bottom-0 z-footerMenu min-w-[320px] bg-black pb-[52px] pl-4 pr-14 pt-4"
               initial={{ y: 200 }}
               animate={{ y: 0 }}
               exit={{ y: 200 }}
@@ -93,7 +93,7 @@ const Footer = () => {
           )}
         </AnimatePresence>
         <button
-          className="relative z-20 flex min-w-[320px] items-center justify-end gap-x-4 bg-black px-5 py-3"
+          className="z-20 relative z-footerNavTrigger flex min-w-[320px] items-center justify-end gap-x-4 bg-black px-5 py-3"
           onClick={toggleMenu}
         >
           <div className="text-right text-lg font-bold leading-tight text-caribbeanGreen hover:text-vividYellow">

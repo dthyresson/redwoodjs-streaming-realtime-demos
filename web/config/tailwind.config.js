@@ -9,6 +9,12 @@ module.exports = {
       colors: {
         caribbeanGreen: '#0fdfac',
         vividYellow: '#ffe500',
+        sandyBrown: '#F7C944',
+        orchid: '#D37DEB',
+        cadetBlue: '#6FA9C5',
+        coral: '#EC9040',
+        darkSlateBlue: '#3F3EBB',
+        midnightBlue: '#20205B',
       },
     },
     fontFamily: {
@@ -16,6 +22,23 @@ module.exports = {
       sans: ['Poppins', 'sans-serif'],
       mono: ['Roboto Mono', 'monospace'],
     },
+    zIndex: {
+      footerNavTrigger: 9999,
+      footerMenu: 9998,
+      footer: 9997,
+      drawer: 9000,
+      githubCorner: 8000,
+      grid: 5,
+      bg: 1,
+    },
   },
   plugins: [],
+  safelist: [
+    'bg-sandyBrown',
+    'bg-caribbeanGreen',
+    'bg-vividYellow',
+    'bg-orchid',
+    'bg-cadetBlue',
+    'bg-coral',
+  ],
 }

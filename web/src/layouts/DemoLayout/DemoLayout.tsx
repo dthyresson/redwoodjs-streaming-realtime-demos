@@ -6,10 +6,10 @@ type DemoLayoutProps = {
 
 const DemoLayout = ({ children }: DemoLayoutProps) => {
   return (
-    <>
+    <div>
       {children}
       <Footer />
-    </>
+    </div>
   )
 }
 

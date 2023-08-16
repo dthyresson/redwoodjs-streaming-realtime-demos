@@ -1,3 +1,5 @@
+import { IconType } from './Icon'
+
 const ChevronDown = ({ size }: IconType) => {
   return (
     <svg

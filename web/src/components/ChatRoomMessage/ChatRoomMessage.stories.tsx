@@ -12,18 +12,25 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import Icon from './Icon'
+import ChatRoomMessage from './ChatRoomMessage'
 
-const meta: Meta<typeof Icon> = {
-  component: Icon,
+const meta: Meta<typeof ChatRoomMessage> = {
+  component: ChatRoomMessage,
 }
 
 export default meta
 
-type Story = StoryObj<typeof Icon>
+type Story = StoryObj<typeof ChatRoomMessage>
 
-export const ChevronDown: Story = {
+export const Primary: Story = {
   args: {
-    name: 'ChevronDown',
+    chatMessage: {
+      id: 1,
+      message: 'Hello',
+      user: {
+        name: 'Amy Dutton',
+        color: 'vividYellow',
+      },
+    },
   },
 }

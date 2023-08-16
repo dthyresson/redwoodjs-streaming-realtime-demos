@@ -12,18 +12,14 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import Icon from './Icon'
+import NavDot from './NavDot'
 
-const meta: Meta<typeof Icon> = {
-  component: Icon,
+const meta: Meta<typeof NavDot> = {
+  component: NavDot,
 }
 
 export default meta
 
-type Story = StoryObj<typeof Icon>
+type Story = StoryObj<typeof NavDot>
 
-export const ChevronDown: Story = {
-  args: {
-    name: 'ChevronDown',
-  },
-}
+export const Primary: Story = {}

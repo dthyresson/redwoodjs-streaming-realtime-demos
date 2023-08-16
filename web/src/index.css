@@ -25,6 +25,36 @@
   }
 }
 
+@layer components {
+  #chat-feed * {
+    overflow-anchor: none;
+  }
+
+  #scroll-anchor {
+    overflow-anchor: auto;
+    height: 1px;
+  }
+
+  .auction-grid {
+    @apply mx-auto grid max-w-[1340px] w-full grid-cols-[1fr_auto_335px] z-grid;
+  }
+
+  .dollar-sign {
+    @apply relative -top-6 text-4xl font-semibold text-[#545D64];
+  }
+
+  .amount {
+    @apply text-6xl font-bold text-[#545D64];
+  }
+
+  .nav-dot {
+    @apply text-[#BEBEBE] hover:text-caribbeanGreen
+  }
+  .nav-dot--active {
+    @apply text-[#7C7C7C] hover:text-caribbeanGreen
+  }
+}
+
 @layer utilities {
   .center {
     @apply flex items-center justify-center

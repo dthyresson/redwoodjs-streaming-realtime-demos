@@ -1,6 +1,7 @@
 import { ChevronDown } from './ChevronDown'
+import { Send } from './Send'
 
-type IconType = {
+export type IconType = {
   size?: number
 }
 
@@ -12,7 +13,9 @@ const Icon = ({ name, size = 24 }: IconProps) => {
   switch (name.toLowerCase()) {
     case 'chevrondown':
       return <ChevronDown size={size} />
+    case 'send':
+      return <Send size={size} />
   }
 }
 
-export { Icon, IconType }
+export default Icon

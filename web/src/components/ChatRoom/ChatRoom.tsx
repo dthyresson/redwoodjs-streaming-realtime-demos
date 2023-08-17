@@ -1,8 +1,10 @@
 import {
   useEffect,
-
+  useState,
   // useRef
 } from 'react'
+
+import { useSubscription } from '@redwoodjs/web'
 
 import ChatRoomMessage, {
   type chatMessage,
@@ -10,24 +12,46 @@ import ChatRoomMessage, {
 
 export type Color =
   | 'vividYellow'
-  | 'sandyBrown'
   | 'orchid'
   | 'cadetBlue'
   | 'coral'
+  | 'sandyBrown'
 
+const COLORS = ['vividYellow', 'orchid', 'cadetBlue', 'coral', 'sandyBrown']
 interface ChatRoomProps {
   roomColor: Color
   chatRoomNumber: number
-  chatFeed: chatMessage[]
   isRoomActive?: boolean
 }
 
-const ChatRoom = ({
-  isRoomActive = false,
-  chatRoomNumber,
-  chatFeed,
-  roomColor,
-}: ChatRoomProps) => {
+const NEW_MESSAGE_SUBSCRIPTION = gql`
+  subscription ListenForNewMessages($id: ID!) {
+    newMessage(roomId: $id) {
+      body
+      from
+    }
+  }
+`
+
+const avatarColor = (roomNumber: number): string => {
+  return COLORS[roomNumber - 1]
+}
+
+const ChatRoom = ({ chatRoomNumber, roomColor }: ChatRoomProps) => {
+  const [chatFeed, setChatFeed] = useState([])
+  const [isRoomActive, setIsRoomActive] = useState(false)
+
+  useEffect(() => {
+    if (isRoomActive) {
+      const timeoutId = setTimeout(() => {
+        setIsRoomActive(false)
+      }, 750)
+
+      // Clear the timeout if the component unmounts or if isRoomActive changes to false before the timeout
+      return () => clearTimeout(timeoutId)
+    }
+  }, [isRoomActive])
+
   // scroll to the bottom
   useEffect(() => {
     const scrollAnchor = document.getElementById('scroll-anchor')
@@ -39,6 +63,27 @@ const ChatRoom = ({
     chatFeed?.scrollTo(0, chatFeed.scrollHeight)
     console.log(chatFeed.scrollHeight)
   }, [])
+
+  useSubscription(NEW_MESSAGE_SUBSCRIPTION, {
+    variables: { id: chatRoomNumber },
+    onData: ({ data }) => {
+      const message = data && data.data?.['newMessage']
+      if (message) {
+        const newMessage = {
+          id: chatFeed.length,
+          message: message.body,
+          user: {
+            name: message.from,
+            color: avatarColor(chatRoomNumber),
+          },
+        } as chatMessage
+
+        setChatFeed((prevChatFeed) => [...prevChatFeed, { ...newMessage }])
+        // setHistory((prevHistory) => [message, ...prevHistory])
+        setIsRoomActive(true)
+      }
+    },
+  })
 
   return (
     <div

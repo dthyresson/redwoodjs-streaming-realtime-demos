@@ -1,11 +1,8 @@
 import { useState } from 'react'
 
-import { useMutation, useSubscription } from '@apollo/client'
-
-import { MetaTags } from '@redwoodjs/web'
+import { MetaTags, useMutation } from '@redwoodjs/web'
 
 import ChatRoom from 'src/components/ChatRoom/ChatRoom'
-import { chatMessage } from 'src/components/ChatRoomMessage/ChatRoomMessage'
 import Drawer from 'src/components/Drawer/Drawer'
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
 import Icon from 'src/components/Icon/Icon'
@@ -13,15 +10,6 @@ import Icon from 'src/components/Icon/Icon'
 const SEND_MESSAGE = gql`
   mutation CreateContactMutation($input: SendMessageInput!) {
     sendMessage(input: $input) {
-      body
-      from
-    }
-  }
-`
-
-const NEW_MESSAGE_SUBSCRIPTION = gql`
-  subscription ListenForNewMessages($id: ID!) {
-    newMessage(roomId: $id) {
       body
       from
     }
@@ -36,104 +24,6 @@ const ChatPage = () => {
 
   // History of chat room history received
   const [history, setHistory] = useState([])
-
-  // Each of the chat feeds per room
-  const [chatFeed1, setChatFeed1] = useState([])
-  const [chatFeed2, setChatFeed2] = useState([])
-  const [chatFeed3, setChatFeed3] = useState([])
-  const [chatFeed4, setChatFeed4] = useState([])
-
-  // Subscription to listen for new messages on each of the four rooms ...
-
-  // Room 1 Subscription
-  useSubscription(NEW_MESSAGE_SUBSCRIPTION, {
-    variables: { id: 1 },
-    onData: ({ data }) => {
-      const message = data && data.data?.['newMessage']
-      if (message) {
-        const newMessage = {
-          id: chatFeed1.length,
-          message: message.body,
-          user: {
-            name: message.from,
-            color: 'vividYellow',
-          },
-        } as chatMessage
-
-        setChatFeed1((prevChatFeed) => [...prevChatFeed, { ...newMessage }])
-        setHistory((prevHistory) => [message, ...prevHistory])
-      }
-    },
-  })
-
-  // Room 2 Subscription
-  useSubscription(NEW_MESSAGE_SUBSCRIPTION, {
-    variables: { id: 2 },
-    onData: ({ data }) => {
-      console.log('onData', data)
-      const message = data && data.data?.['newMessage']
-      console.log('onData -> message', message)
-      if (message) {
-        const newMessage = {
-          id: chatFeed2.length,
-          message: message.body,
-          user: {
-            name: message.from,
-            color: 'orchid',
-          },
-        } as chatMessage
-
-        setChatFeed2((prevChatFeed) => [...prevChatFeed, { ...newMessage }])
-        setHistory((prevHistory) => [message, ...prevHistory])
-      }
-    },
-  })
-
-  // Room 3 Subscription
-  useSubscription(NEW_MESSAGE_SUBSCRIPTION, {
-    variables: { id: 3 },
-    onData: ({ data }) => {
-      const message = data && data.data?.['newMessage']
-      console.log('onData -> message', message)
-      // Construct a new message object to add to the chat feed
-      if (message) {
-        const newMessage = {
-          id: chatFeed3.length,
-          message: message.body,
-          user: {
-            name: message.from,
-            color: 'cadetBlue',
-          },
-        } as chatMessage
-
-        setChatFeed3((prevChatFeed) => [...prevChatFeed, { ...newMessage }])
-        setHistory((prevHistory) => [message, ...prevHistory])
-      }
-    },
-  })
-
-  // Room 4 Subscription
-  useSubscription(NEW_MESSAGE_SUBSCRIPTION, {
-    variables: { id: 4 },
-    onData: ({ data }) => {
-      console.log('onData', data)
-      const message = data && data.data?.['newMessage']
-      console.log('onData -> message', message)
-      if (message) {
-        const newMessage = {
-          id: chatFeed4.length,
-          message: message.body,
-          user: {
-            name: message.from,
-            color: 'coral',
-          },
-        } as chatMessage
-
-        setChatFeed4((prevChatFeed) => [...prevChatFeed, { ...newMessage }])
-        setHistory((prevHistory) => [message, ...prevHistory])
-      }
-    },
-  })
 
   // Mutation to send a message to a room
   const [create] = useMutation(SEND_MESSAGE, {
@@ -158,7 +48,7 @@ const ChatPage = () => {
       <div className="h-screen w-screen bg-[#313191]">
         <Drawer>
           <pre>
-            {history.map((h, i) => (
+            {history?.map((h, i) => (
               <p key={`chat-history-${i}`}>{JSON.stringify(h, null, 2)}</p>
             ))}
           </pre>
@@ -176,28 +66,28 @@ const ChatPage = () => {
             <ChatRoom
               roomColor="vividYellow"
               chatRoomNumber={1}
-              chatFeed={chatFeed1}
+              // chatFeed={chatFeed1}
             />
           </div>
           <div className="h-[calc(100vh-164px)] border-r-2 border-r-[#615EC4]">
             <ChatRoom
               roomColor="orchid"
               chatRoomNumber={2}
-              chatFeed={chatFeed2}
+              // chatFeed={chatFeed2}
             />
           </div>
           <div className="h-[calc(100vh-164px)] border-r-2 border-r-[#615EC4]">
             <ChatRoom
               roomColor="cadetBlue"
               chatRoomNumber={3}
-              chatFeed={chatFeed3}
+              // chatFeed={chatFeed3}
             />
           </div>
           <div className="h-[calc(100vh-164px)]">
             <ChatRoom
               roomColor="coral"
               chatRoomNumber={4}
-              chatFeed={chatFeed4}
+              // chatFeed={chatFeed4}
             />
           </div>
           <div className="col-span-4 flex items-center gap-x-4 border-t-2 border-t-[#615EC4] bg-[#0C0C26] px-5">

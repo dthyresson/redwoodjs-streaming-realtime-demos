@@ -6,6 +6,7 @@ import ChatRoom from 'src/components/ChatRoom/ChatRoom'
 import Drawer from 'src/components/Drawer/Drawer'
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
 import Icon from 'src/components/Icon/Icon'
+import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
 
 const SEND_MESSAGE = gql`
   mutation CreateContactMutation($input: SendMessageInput!) {
@@ -21,9 +22,6 @@ const ChatPage = () => {
   const [roomId, setRoomId] = useState('1')
   const [from, setFrom] = useState('')
   const [body, setBody] = useState('')
-
-  // History of chat room history received
-  const [history, setHistory] = useState([])
 
   // Mutation to send a message to a room
   const [create] = useMutation(SEND_MESSAGE, {
@@ -48,9 +46,13 @@ const ChatPage = () => {
       <div className="h-screen w-screen bg-[#313191]">
         <Drawer>
           <pre>
-            {history?.map((h, i) => (
-              <p key={`chat-history-${i}`}>{JSON.stringify(h, null, 2)}</p>
-            ))}
+            <HistoryContext.Consumer>
+              {(value) => (
+                <p key={`chat-history-${value}`}>
+                  {JSON.stringify(value, null, 2)}
+                </p>
+              )}
+            </HistoryContext.Consumer>
           </pre>
         </Drawer>
 

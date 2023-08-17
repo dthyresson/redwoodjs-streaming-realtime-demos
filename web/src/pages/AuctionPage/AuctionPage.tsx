@@ -7,6 +7,7 @@ import AuctionCard from 'src/components/AuctionCard/AuctionCard'
 import Drawer from 'src/components/Drawer/Drawer'
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
 import NavDot from 'src/components/NavDot/NavDot'
+import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
 
 const BID_ON_AUCTION = gql`
   mutation CreateBid($input: BidInput!) {
@@ -35,13 +36,13 @@ const AuctionPage = ({ id }) => {
   const [bidAmount, setBidAmount] = useState(10)
 
   // Auction history
-  const [history, setHistory] = useState([])
+  const history = React.useContext(HistoryContext)
 
   // Get the current auction with a @live query directive to receive updates in real time when a new bid is placed
   const { data } = useQuery(AUCTION_LIVE_QUERY, {
     variables: { id },
     onCompleted(data) {
-      setHistory((prevHistory) => [data, ...prevHistory])
+      history.push(data.auction)
     },
   })
 
@@ -61,11 +62,13 @@ const AuctionPage = ({ id }) => {
 
       <Drawer>
         <pre>
-          {history.map((h, i) => (
-            <p key={`auction-${id}-history-${i}`}>
-              {JSON.stringify(h, null, 2)}
-            </p>
-          ))}
+          <HistoryContext.Consumer>
+            {(value) => (
+              <p key={`countdown-history-${value}`}>
+                {JSON.stringify(value, null, 2)}
+              </p>
+            )}
+          </HistoryContext.Consumer>
         </pre>
       </Drawer>
 

@@ -6,6 +6,8 @@ import {
 
 import { useSubscription } from '@redwoodjs/web'
 
+import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
+
 import ChatRoomMessage, {
   type chatMessage,
 } from '../ChatRoomMessage/ChatRoomMessage'
@@ -16,12 +18,9 @@ export type Color =
   | 'cadetBlue'
   | 'coral'
   | 'sandyBrown'
-
-const COLORS = ['vividYellow', 'orchid', 'cadetBlue', 'coral', 'sandyBrown']
 interface ChatRoomProps {
   roomColor: Color
   chatRoomNumber: number
-  isRoomActive?: boolean
 }
 
 const NEW_MESSAGE_SUBSCRIPTION = gql`
@@ -33,13 +32,11 @@ const NEW_MESSAGE_SUBSCRIPTION = gql`
   }
 `
 
-const avatarColor = (roomNumber: number): string => {
-  return COLORS[roomNumber - 1]
-}
-
 const ChatRoom = ({ chatRoomNumber, roomColor }: ChatRoomProps) => {
   const [chatFeed, setChatFeed] = useState([])
   const [isRoomActive, setIsRoomActive] = useState(false)
+
+  const history = React.useContext(HistoryContext)
 
   useEffect(() => {
     if (isRoomActive) {
@@ -74,12 +71,12 @@ const ChatRoom = ({ chatRoomNumber, roomColor }: ChatRoomProps) => {
           message: message.body,
           user: {
             name: message.from,
-            color: avatarColor(chatRoomNumber),
+            color: roomColor,
           },
         } as chatMessage
 
         setChatFeed((prevChatFeed) => [...prevChatFeed, { ...newMessage }])
-        // setHistory((prevHistory) => [message, ...prevHistory])
+        history.push(message)
         setIsRoomActive(true)
       }
     },

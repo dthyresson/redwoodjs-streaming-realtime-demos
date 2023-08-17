@@ -6,6 +6,7 @@ import { MetaTags } from '@redwoodjs/web'
 
 import Drawer from 'src/components/Drawer/Drawer'
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
+import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
 
 const COUNTDOWN_SUBSCRIPTION = gql`
   subscription Countdown($from: Int!, $interval: Int!) {
@@ -17,13 +18,14 @@ const CountdownPage = () => {
   const [interval, setInterval] = useState(10)
 
   const [countdown, setCountdown] = useState(from)
-  const [history, setHistory] = useState([])
+
+  const history = React.useContext(HistoryContext)
 
   useSubscription(COUNTDOWN_SUBSCRIPTION, {
     variables: { from, interval },
     onData({ data }) {
       setCountdown(data.data['countdown'])
-      setHistory((prevHistory) => [data.data, ...prevHistory])
+      history.push(data.data)
     },
   })
 
@@ -38,11 +40,25 @@ const CountdownPage = () => {
 
       <Drawer theme="vividYellow">
         <pre>
-          {history.map((content, i) => (
-            <p key={`countdown-history-${i}`}>
-              {JSON.stringify(content, null, 2)}
-            </p>
-          ))}
+          <HistoryContext.Consumer>
+            {(value) => (
+              <p key={`countdown-history-${value}`}>
+                {JSON.stringify(value, null, 2)}
+              </p>
+            )}
+          </HistoryContext.Consumer>
+        </pre>
+      </Drawer>
+
+      <Drawer theme="vividYellow">
+        <pre>
+          <HistoryContext.Consumer>
+            {(value) => (
+              <p key={`chat-history-${value}`}>
+                {JSON.stringify(value, null, 2)}
+              </p>
+            )}
+          </HistoryContext.Consumer>
         </pre>
       </Drawer>
 

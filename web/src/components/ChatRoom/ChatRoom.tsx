@@ -42,7 +42,7 @@ const ChatRoom = ({ chatRoomNumber, roomColor }: ChatRoomProps) => {
     if (isRoomActive) {
       const timeoutId = setTimeout(() => {
         setIsRoomActive(false)
-      }, 750)
+      }, 500)
 
       // Clear the timeout if the component unmounts or if isRoomActive changes to false before the timeout
       return () => clearTimeout(timeoutId)
@@ -86,7 +86,7 @@ const ChatRoom = ({ chatRoomNumber, roomColor }: ChatRoomProps) => {
     <div
       className={`flex h-full flex-col ${
         !isRoomActive ? 'bg-midnightBlue' : 'bg-darkSlateBlue'
-      } text-white`}
+      } transition-background-color text-white duration-500`}
     >
       <div className="flex w-full items-center gap-x-4 border-b-1 border-b-[#7F7CDA] p-5">
         <div

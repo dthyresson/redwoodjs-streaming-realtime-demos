@@ -10,6 +10,9 @@
 import { Router, Route, Set } from '@redwoodjs/router'
 
 import DemoLayout from './layouts/DemoLayout/DemoLayout'
+import AuctionPage from './pages/AuctionPage/AuctionPage'
+import ChatPage from './pages/ChatPage/ChatPage'
+import CountdownPage from './pages/CountdownPage/CountdownPage'
 
 const Routes = () => {
   return (

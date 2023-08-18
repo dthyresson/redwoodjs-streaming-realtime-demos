@@ -25,7 +25,7 @@ const CountdownPage = () => {
     variables: { from, interval },
     onData({ data }) {
       setCountdown(data.data['countdown'])
-      history.push(data.data)
+      history.unshift(data.data)
     },
   })
 

@@ -76,7 +76,7 @@ const ChatRoom = ({ chatRoomNumber, roomColor }: ChatRoomProps) => {
         } as chatMessage
 
         setChatFeed((prevChatFeed) => [...prevChatFeed, { ...newMessage }])
-        history.push(message)
+        history.unshift(message)
         setIsRoomActive(true)
       }
     },

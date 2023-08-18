@@ -42,7 +42,7 @@ const AuctionPage = ({ id }) => {
   const { data } = useQuery(AUCTION_LIVE_QUERY, {
     variables: { id },
     onCompleted(data) {
-      history.push(data.auction)
+      history.unshift(data.auction)
     },
   })
 

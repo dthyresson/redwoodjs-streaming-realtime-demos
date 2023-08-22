@@ -19,6 +19,7 @@ messages=("Hello!" "How's it going?" "Nice weather today." "Any plans for the we
     "Let's plan a picnic when the weather gets warmer." "Keep being your amazing self!" "Your presence makes everything better." "You inspire me!"
     "Wishing you success in all your endeavors." "Let's share some laughter soon." "Stay curious and keep exploring!"
 )
+
 # Function to send a chat message
 send_chat() {
     local roomId="$1"
@@ -26,37 +27,55 @@ send_chat() {
     local body="$3"
     echo "Sending chat: roomId=$roomId, from=$from, body=$body"
     # Replace with the actual path to your chat script
-    ./chat.sh "$roomId" "$from" "$body"
+    # ./chat.sh "$roomId" "$from" "$body"
     sleep 2
 }
 
-# Check if a number of messages is provided as an argument
-if [[ $# -eq 1 && "$1" =~ ^[0-9]+$ ]]; then
-    num_messages="$1"
-else
-    num_messages=0
+# Function to display help information
+display_help() {
+    echo "Usage: $0 -r [roomId] -n [num_messages]"
+    echo "       $0 -h"
+    echo ""
+    echo "Options:"
+    echo "  -r roomId       Specify the room ID (1-4) for sending chat messages."
+    echo "  -n num_messages Specify the number of chat messages to send. If not provided, the script will run with a random number of messages."
+    echo "  -h              Display this help message."
+    exit 1
+}
+
+# Parse command-line options
+while getopts "r:n:h" opt; do
+    case "$opt" in
+        r) roomId="$OPTARG";;
+        n) num_messages="$OPTARG";;
+        h) display_help;;
+        *) display_help;;
+    esac
+done
+
+# Validate roomId
+if [[ "$roomId" -ne 0 && ! "${roomIds[*]}" =~ (^| )"$roomId"( |$) ]]; then
+    echo "Invalid room ID."
+    display_help
 fi
 
-# Start sending messages
-while true; do
-    if [[ $num_messages -gt 0 ]]; then
-        if [[ $num_messages -eq 0 ]]; then
-            break
-        fi
-        num_messages=$((num_messages - 1))
-    fi
+# Set default values if not provided
+if [[ -z "$num_messages" ]]; then
+    num_messages=$((RANDOM % 18 + 3))  # Generate a random number between 3 and 20
+fi
 
-    random_roomId=${roomIds[$((RANDOM % ${#roomIds[@]}))]}
+echo "Sending $num_messages messages to room $roomId..."
+
+# Start sending messages
+for ((i = 0; i < num_messages; i++)); do
     random_from=${from_names[$((RANDOM % ${#from_names[@]}))]}
     random_message=${messages[$((RANDOM % ${#messages[@]}))]}
 
-    send_chat "$random_roomId" "$random_from" "$random_message"
-
-    if [[ $num_messages -eq 0 ]]; then
-        read -p "Enter 'q' to exit or press Enter to continue: " action
-        if [[ "$action" == "q" ]]; then
-            break
-        fi
+    if [[ "$roomId" -eq 0 ]]; then
+        randomRoomId=${roomIds[$((RANDOM % ${#roomIds[@]}))]}  # Pick a random room ID
+        send_chat "$randomRoomId" "$random_from" "$random_message"
+    else
+        send_chat "$roomId" "$random_from" "$random_message"
     fi
 done
 

@@ -29,6 +29,18 @@ const getMovies = (input) => {
   return { id, firstMovie, secondMovie }
 }
 
+const PROMPT = `
+Propose a short new movie treatment in the style of a movie trailer advertisement voice over
+by mashing up the plots, characters, their names, and themes of two existing movies.
+
+Give the new movie a title and tagline that could be used on a movie poster.
+
+The treatment should be no longer than 3 sentences.
+
+Return the title, tagline, and treatment of the new movie as text with labels:
+Title, Tagline, and Treatment.
+`
+
 export const mashupMovies = async (
   { input },
   { context }: { context: { liveQueryStore: LiveQueryStorageMechanism } }
@@ -40,8 +52,7 @@ export const mashupMovies = async (
     messages: [
       {
         role: 'system',
-        content:
-          'Propose a short new movie treatment in the style of a movie trailer advertisement voice over by mashing up the plots, characters, their names, and themes of two existing movies.\n\nGive the new movie a title and tagline that could be used on a movie poster.\n\nThe treatment should be no longer than 3 sentences.\n\nReturn the title, tagline, and treatment of the new movie as text with labels Title, Tagline, and Treatment.',
+        content: PROMPT,
       },
       {
         role: 'user',

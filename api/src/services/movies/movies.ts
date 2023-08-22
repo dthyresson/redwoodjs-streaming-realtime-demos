@@ -3,54 +3,37 @@ import OpenAI from 'openai'
 import type { LiveQueryStorageMechanism } from '@redwoodjs/realtime'
 
 import { logger } from 'src/lib/logger'
+import { MovieMashups } from 'src/lib/movieMashups'
+import { Movies } from 'src/lib/movies'
 
-const MOVIES = [
-  {
-    id: '11-star-wars',
-    title: 'Star Wars',
-    photo:
-      'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg',
-  },
-  {
-    id: '12-finding-nemo',
-    title: 'Finding Nemo',
-    photo:
-      'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/eHuGQ10FUzK1mdOY69wF5pGgEf5.jpg',
-  },
-  {
-    id: '11006-smokey-and-the-bandit',
-    title: 'Smokey and the Bandit',
-    photo:
-      'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/vKEUp6L57RMGHMdC0hdCJiVyEW6.jpg',
-  },
-  {
-    id: '9340-the-goonies',
-    title: 'The Goonies',
-    photo:
-      'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/eBU7gCjTCj9n2LTxvCSIXXOvHkD.jpg',
-  },
-]
-
-const MOVIE_MASHUP_STREAMS = []
+const movieMashups = new MovieMashups()
+const movieData = new Movies()
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
 export const movies = () => {
-  return MOVIES
+  return movieData.all()
 }
 
 export const movie = ({ id }) => {
-  return MOVIES.find((movie) => movie.id === id)
+  return movieData.get(id)
+}
+
+const getMovies = (input) => {
+  const firstMovie = movieData.get(input.firstMovieId)
+  const secondMovie = movieData.get(input.secondMovieId)
+
+  const id = `${firstMovie.id}|${secondMovie.id}`
+  return { id, firstMovie, secondMovie }
 }
 
 export const mashupMovies = async (
   { input },
   { context }: { context: { liveQueryStore: LiveQueryStorageMechanism } }
 ) => {
-  const firstMovie = MOVIES.find((movie) => movie.id === input.firstMovieId)
-  const secondMovie = MOVIES.find((movie) => movie.id === input.secondMovieId)
+  const { id, firstMovie, secondMovie } = getMovies(input)
 
   const stream = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
@@ -73,31 +56,26 @@ export const mashupMovies = async (
     stream: true,
   })
 
-  const id = `${firstMovie.id}|${secondMovie.id}`
-
-  const streamingMashup = MOVIE_MASHUP_STREAMS.find(
-    (mashup) => mashup.key === id
-  )
+  const streamingMashup = movieMashups.get(id)
 
   let body = ''
 
   if (!streamingMashup) {
-    MOVIE_MASHUP_STREAMS[id] = {
+    movieMashups.set(id, {
       id,
       firstMovie,
       secondMovie,
-      mashup: { firstMovie, secondMovie, body },
-    }
+      mashup: { body },
+    })
   }
 
   for await (const part of stream) {
-    // logger.debug({ part }, 'OpenAI stream part')
     const { content } = part.choices[0].delta
     logger.debug({ content }, 'OpenAI stream part')
     body += content ?? ''
-    MOVIE_MASHUP_STREAMS[id].mashup.body = body
+    movieMashups.get(id).mashup.body = body
     logger.debug(
-      { id, mashup: MOVIE_MASHUP_STREAMS[id] },
+      { id, mashup: movieMashups.get(id) },
       'Invalidating movie mashup key'
     )
 
@@ -115,27 +93,22 @@ export const mashupMovies = async (
 }
 
 export const movieMashup = async ({ input }) => {
-  const firstMovie = MOVIES.find((movie) => movie.id === input.firstMovieId)
-  const secondMovie = MOVIES.find((movie) => movie.id === input.secondMovieId)
-  const id = `${firstMovie.id}|${secondMovie.id}`
+  const { id, firstMovie, secondMovie } = getMovies(input)
 
-  let streamingMashup = MOVIE_MASHUP_STREAMS[id]
+  let streamingMashup = movieMashups.get(id)
 
   if (!streamingMashup) {
-    MOVIE_MASHUP_STREAMS[id] = {
+    movieMashups.set(id, {
       id,
       firstMovie,
       secondMovie,
-      mashup: { firstMovie, secondMovie, body: '' },
-    }
+      mashup: { body: '' },
+    })
   }
 
-  streamingMashup = MOVIE_MASHUP_STREAMS[id]
+  streamingMashup = movieMashups.get(id)
 
-  logger.debug(
-    { id, mashup: MOVIE_MASHUP_STREAMS[id] },
-    'Listening to movie mashup key'
-  )
+  logger.debug({ id, mashup: streamingMashup }, 'Listening to movie mashup key')
 
   return streamingMashup
 }

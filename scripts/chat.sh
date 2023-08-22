@@ -40,6 +40,8 @@ body=${3:-$default_body}
 # Construct the GraphQL query
 query="{\"query\":\"mutation Chat(\$input: SendMessageInput!) { sendMessage(input: \$input) { from body }}\",\"variables\":{\"input\":{\"roomId\":\"$roomId\",\"from\":\"$from\",\"body\":\"$body\"}}}"
 
+echo "Sending $from $body to room $roomId..."
+
 # Make the curl request
 curl -X "POST" "http://localhost:8911/graphql" \
      -H 'Content-Type: application/json; charset=utf-8' \

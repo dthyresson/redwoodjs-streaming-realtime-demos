@@ -27,7 +27,7 @@ send_chat() {
     local body="$3"
     echo "Sending chat: roomId=$roomId, from=$from, body=$body"
     # Replace with the actual path to your chat script
-    # ./chat.sh "$roomId" "$from" "$body"
+    ./chat.sh "$roomId" "$from" "$body"
     sleep 2
 }
 

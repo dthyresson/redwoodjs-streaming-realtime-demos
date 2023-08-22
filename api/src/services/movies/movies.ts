@@ -1,4 +1,5 @@
 import OpenAI from 'openai'
+import type { Movie, MovieMashup, MovieMashupInput } from 'types/graphql'
 
 import type { LiveQueryStorageMechanism } from '@redwoodjs/realtime'
 
@@ -13,15 +14,15 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
-export const movies = () => {
+export const movies = (): Movie[] => {
   return movieData.all()
 }
 
-export const movie = ({ id }) => {
+export const movie = ({ id }): Movie => {
   return movieData.get(id)
 }
 
-const getMovies = (input) => {
+const getMovies = (input: MovieMashupInput) => {
   const firstMovie = movieData.get(input.firstMovieId)
   const secondMovie = movieData.get(input.secondMovieId)
 
@@ -42,9 +43,9 @@ Title, Tagline, and Treatment.
 `
 
 export const mashupMovies = async (
-  { input },
+  { input }: { input: MovieMashupInput },
   { context }: { context: { liveQueryStore: LiveQueryStorageMechanism } }
-) => {
+): Promise<MovieMashup> => {
   const { id, firstMovie, secondMovie } = getMovies(input)
 
   const stream = await openai.chat.completions.create({
@@ -99,11 +100,15 @@ export const mashupMovies = async (
     id,
     firstMovie,
     secondMovie,
-    mashup: { firstMovie, secondMovie, body },
+    mashup: { body },
   }
 }
 
-export const movieMashup = async ({ input }) => {
+export const movieMashup = async ({
+  input,
+}: {
+  input: MovieMashupInput
+}): Promise<MovieMashup> => {
   const { id, firstMovie, secondMovie } = getMovies(input)
 
   let streamingMashup = movieMashups.get(id)

@@ -17,6 +17,18 @@ const MOVIES = [
     photo:
       'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/eHuGQ10FUzK1mdOY69wF5pGgEf5.jpg',
   },
+  {
+    id: '11006-smokey-and-the-bandit',
+    title: 'Smokey and the Bandit',
+    photo:
+      'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/vKEUp6L57RMGHMdC0hdCJiVyEW6.jpg',
+  },
+  {
+    id: '9340-the-goonies',
+    title: 'The Goonies',
+    photo:
+      'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/eBU7gCjTCj9n2LTxvCSIXXOvHkD.jpg',
+  },
 ]
 
 const MOVIE_MASHUP_STREAMS = []
@@ -33,44 +45,7 @@ export const movie = ({ id }) => {
   return MOVIES.find((movie) => movie.id === id)
 }
 
-export const movieMashup = async ({ input }) => {
-  const firstMovie = MOVIES.find((movie) => movie.id === input.firstMovieId)
-  const secondMovie = MOVIES.find((movie) => movie.id === input.secondMovieId)
-
-  const response = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo',
-    messages: [
-      {
-        role: 'system',
-        content:
-          'Propose a short new movie treatment in the style of a movie trailer advertisement voice over by mashing up the plots, characters, their names, and themes of two existing movies.\n\nGive the new movie a title and tagline that could be used on a movie poster.\n\nThe treatment should be no longer than 3 sentences.\n\nReturn the title, tagline, and treatment of the new movie as JSON.',
-      },
-      {
-        role: 'user',
-        content: `Movie 1: ${firstMovie.title}\nMovie 2: ${secondMovie.title}`,
-      },
-    ],
-    temperature: 1,
-    max_tokens: 256,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-  })
-
-  logger.debug({ response }, 'OpenAI response')
-
-  const { content } = response.choices[0].message
-
-  logger.debug({ content }, 'OpenAI content')
-
-  return {
-    firstMovie,
-    secondMovie,
-    mashup: JSON.parse(content),
-  }
-}
-
-export const movieMashupStream = async (
+export const mashupMovies = async (
   { input },
   { context }: { context: { liveQueryStore: LiveQueryStorageMechanism } }
 ) => {
@@ -98,20 +73,20 @@ export const movieMashupStream = async (
     stream: true,
   })
 
-  const chunk = ''
-
   const id = `${firstMovie.id}|${secondMovie.id}`
 
   const streamingMashup = MOVIE_MASHUP_STREAMS.find(
     (mashup) => mashup.key === id
   )
 
+  let body = ''
+
   if (!streamingMashup) {
     MOVIE_MASHUP_STREAMS[id] = {
       id,
       firstMovie,
       secondMovie,
-      mashup: { firstMovie, secondMovie, chunk },
+      mashup: { firstMovie, secondMovie, body },
     }
   }
 
@@ -119,26 +94,27 @@ export const movieMashupStream = async (
     // logger.debug({ part }, 'OpenAI stream part')
     const { content } = part.choices[0].delta
     logger.debug({ content }, 'OpenAI stream part')
-    MOVIE_MASHUP_STREAMS[id].mashup.chunk += content
+    body += content ?? ''
+    MOVIE_MASHUP_STREAMS[id].mashup.body = body
     logger.debug(
       { id, mashup: MOVIE_MASHUP_STREAMS[id] },
       'Invalidating movie mashup key'
     )
 
-    context.liveQueryStore.invalidate(`MovieMashupStream:${id}`)
+    context.liveQueryStore.invalidate(`MovieMashup:${id}`)
   }
 
-  logger.debug({ chunk }, 'Mashup chunk')
+  logger.debug({ body }, 'Mashup body')
 
   return {
     id,
     firstMovie,
     secondMovie,
-    mashup: { firstMovie, secondMovie, chunk },
+    mashup: { firstMovie, secondMovie, body },
   }
 }
 
-export const mashup = async ({ input }) => {
+export const movieMashup = async ({ input }) => {
   const firstMovie = MOVIES.find((movie) => movie.id === input.firstMovieId)
   const secondMovie = MOVIES.find((movie) => movie.id === input.secondMovieId)
   const id = `${firstMovie.id}|${secondMovie.id}`
@@ -150,7 +126,7 @@ export const mashup = async ({ input }) => {
       id,
       firstMovie,
       secondMovie,
-      mashup: { firstMovie, secondMovie, chunk: '' },
+      mashup: { firstMovie, secondMovie, body: '' },
     }
   }
 

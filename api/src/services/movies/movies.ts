@@ -44,6 +44,10 @@ export const mashupMovies = async (
 ): Promise<MovieMashup> => {
   const { id, firstMovie, secondMovie } = getMovies(input)
 
+  if (!firstMovie || !secondMovie) {
+    throw new Error('Missing movie')
+  }
+
   const stream = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
     messages: [
@@ -106,6 +110,10 @@ export const movieMashup = async ({
   input: MovieMashupInput
 }): Promise<MovieMashup> => {
   const { id, firstMovie, secondMovie } = getMovies(input)
+
+  if (!firstMovie || !secondMovie) {
+    throw new Error('Missing movie')
+  }
 
   let streamingMashup = movieMashups.get(id)
 

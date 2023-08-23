@@ -24,11 +24,17 @@ const newStory = {
       { input }: { input: StoryInput },
       { pubSub }: { pubSub: NewStoryChannelType }
     ) => {
-      logger.debug({ input }, 'newStory subscription')
+      const { animalId, colorId, activityId, adjectiveId } = input
 
-      const id = buildStoryId(input)
+      if (animalId && colorId && activityId && adjectiveId) {
+        logger.debug({ input }, 'newStory subscription')
 
-      return pubSub.subscribe('newStory', id)
+        const id = buildStoryId(input)
+
+        logger.debug({ id }, 'newStory subscription id')
+
+        return pubSub.subscribe('newStory', id)
+      }
     },
     resolve: (payload) => {
       logger.debug({ payload }, 'newStory subscription resolve')

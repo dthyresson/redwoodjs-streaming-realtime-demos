@@ -29,10 +29,10 @@ export const schema = gql`
   }
 
   input StoryInput {
-    animalId: ID!
-    colorId: ID!
-    activityId: ID!
-    adjectiveId: ID!
+    animalId: ID
+    colorId: ID
+    activityId: ID
+    adjectiveId: ID
   }
 
   type Mutation {

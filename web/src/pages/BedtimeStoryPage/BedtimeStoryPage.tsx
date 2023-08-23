@@ -10,6 +10,7 @@ import { useMutation, useSubscription } from '@redwoodjs/web'
 import Drawer from 'src/components/Drawer/Drawer'
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
 import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
+import MarkdownFormatter from 'src/utils/MarkdownFormatter'
 
 const GET_STORY_CONFIG = gql`
   query GetStoryConfig {
@@ -126,7 +127,6 @@ const BedtimeStoryPage = () => {
   const [create] = useMutation(TELL_STORY_MUTATION)
 
   const onStory = (_data) => {
-    console.log(`onStory: ${animalId} ${colorId} ${activityId} ${adjectiveId}`)
     create({
       variables: {
         input: {
@@ -226,7 +226,7 @@ const BedtimeStoryPage = () => {
           <div className="grid grid-cols-2 ">
             <div className="">
               <h1 className="py-4 text-2xl">{title}</h1>
-              <p>{body}</p>
+              <MarkdownFormatter content={body} />
             </div>
             <div>
               <button

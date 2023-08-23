@@ -8,6 +8,7 @@ import { useMutation, useQuery } from '@redwoodjs/web'
 import Drawer from 'src/components/Drawer/Drawer'
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
 import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
+import MarkdownFormatter from 'src/utils/MarkdownFormatter'
 
 const GET_MOVIES_QUERY = gql`
   query GetMovies {
@@ -37,58 +38,6 @@ const MASHUP_MOVIE_MUTATION = gql`
     }
   }
 `
-
-const MarkdownFormatter = ({ content }) => {
-  const lines = content.split('\n')
-  const formattedLines = []
-
-  lines.forEach((line, index) => {
-    if (line.startsWith('#')) {
-      // Handle headings
-      const level = line.match(/^(#+)\s/)
-      if (level) {
-        const headingLevel = Math.min(level[1].length, 3)
-        let headingSize = 'sm'
-        switch (headingLevel) {
-          case 1:
-            headingSize = '2xl'
-            break
-          case 2:
-            headingSize = 'xl'
-            break
-          case 3:
-            headingSize = 'lg'
-            break
-          default:
-            headingSize = 'sm'
-        }
-        const text = line.replace(/^#+\s/, '')
-        formattedLines.push(
-          React.createElement(
-            `h${headingLevel}`,
-            { key: index, className: `text-${headingSize} my-2` },
-            text
-          )
-        )
-      }
-    } else if (line.startsWith('* ')) {
-      // Handle bold
-      const text = line.replace(/^\*/, '')
-      formattedLines.push(
-        React.createElement(
-          'strong',
-          { key: index, className: 'font-bold' },
-          text
-        )
-      )
-    } else {
-      // Regular text
-      formattedLines.push(React.createElement('p', { key: index }, line))
-    }
-  })
-
-  return <div>{formattedLines}</div>
-}
 
 const MovieMashupPage = () => {
   const [firstMovieId, setFirstMovieId] = useState(null)
@@ -167,9 +116,9 @@ const MovieMashupPage = () => {
                 key={`movie1-pick-${movie.id}`}
                 className={`my-4 flex h-full w-full cursor-pointer flex-col items-center justify-between gap-2 p-4 ${
                   firstMovieId === movie.id
-                    ? 'rounded-md border-2 border-green-500 bg-green-300'
+                    ? 'rounded-md border-2 border-amber-500 bg-amber-400'
                     : secondMovieId === movie.id
-                    ? 'rounded-md border-2 border-blue-500 bg-blue-300'
+                    ? 'rounded-md border-2 border-purple-500 bg-purple-400'
                     : 'rounded-md border-2 border-blue-100 bg-blue-200 hover:bg-sky-300'
                 }`}
                 onClick={() => handleMovieClick(movie.id)}

@@ -49,6 +49,8 @@ export const ANIMALS = [
   { id: '48', name: 'Squirrel' },
   { id: '49', name: 'Chipmunk' },
   { id: '50', name: 'Mouse' },
+  { id: '51', name: 'Meerkat' },
+  { id: '52', name: 'Wallaby' },
 ]
 
 export const COLORS = [
@@ -88,19 +90,21 @@ export const ACTIVITIES = [
   { id: '11', name: 'cooks a meal for friends' },
   { id: '12', name: 'goes shopping for new shoes' },
   { id: '13', name: 'goes to a baseball game' },
-  { id: '14', name: 'goes to a football game' },
-  { id: '15', name: 'goes to a basketball game' },
-  { id: '16', name: 'goes to a soccer game' },
-  { id: '17', name: 'goes to a hockey game' },
-  { id: '18', name: 'goes to a tennis match' },
-  { id: '19', name: 'writes a song' },
+  { id: '14', name: 'flies a kite' },
+  { id: '15', name: 'sails across the ocean' },
+  { id: '16', name: 'flies in an airplane' },
+  { id: '17', name: 'visits grandparents' },
+  { id: '18', name: 'falls in love' },
+  { id: '19', name: 'sings a song' },
   { id: '20', name: 'writes a poem' },
   { id: '21', name: 'paints a picture' },
   { id: '22', name: 'goes to a dance recital' },
   { id: '23', name: 'acts in a play' },
   { id: '24', name: 'learns to play piano' },
-  { id: '24', name: 'learns to play guitar' },
-  { id: '25', name: 'learns to play drums' },
+  { id: '25', name: 'learns to play guitar' },
+  { id: '26', name: 'learns to play drums' },
+  { id: '27', name: 'wears a new hat' },
+  { id: '28', name: 'buys an ice cream cone' },
 ]
 
 export const ADJECTIVES = [

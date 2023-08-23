@@ -1,6 +1,6 @@
 import type { Movie } from 'types/graphql'
 
-import { MOVIES } from './data'
+import { MOVIES } from './data/movies'
 
 export class Movies {
   private movies: Movie[] = MOVIES

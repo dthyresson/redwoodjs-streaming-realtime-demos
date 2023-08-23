@@ -1,4 +1,8 @@
 export const schema = gql`
+  type Adjective {
+    id: ID!
+    name: String!
+  }
   type Animal {
     id: ID!
     name: String!
@@ -21,12 +25,14 @@ export const schema = gql`
     animal: Animal!
     color: Color!
     activity: Activity!
+    adjective: Adjective!
   }
 
   input StoryInput {
     animalId: ID!
     colorId: ID!
     activityId: ID!
+    adjectiveId: ID!
   }
 
   type Mutation {

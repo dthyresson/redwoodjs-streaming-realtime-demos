@@ -1,7 +1,25 @@
-import type { Animal, Color, Activity } from 'types/graphql'
+import type {
+  Adjective,
+  Animal,
+  Color,
+  Activity,
+  StoryInput,
+} from 'types/graphql'
 
-import { ANIMALS, COLORS, ACTIVITIES } from './data'
+import { ADJECTIVES, ANIMALS, COLORS, ACTIVITIES } from './data/stories'
 
+export const buildStoryId = (input: StoryInput) => {
+  return [
+    'animal',
+    input.animalId,
+    'color',
+    input.colorId,
+    'activity',
+    input.activityId,
+    'adjective',
+    input.adjectiveId,
+  ].join('|')
+}
 export class Animals {
   private animals: Animal[] = ANIMALS
 
@@ -35,5 +53,17 @@ export class Activities {
 
   all(): Activity[] {
     return this.activities
+  }
+}
+
+export class Adjectives {
+  private adjectives: Adjective[] = ADJECTIVES
+
+  get(id: string): Adjective | undefined {
+    return this.adjectives.find((adjective) => adjective.id === id)
+  }
+
+  all(): Adjective[] {
+    return this.adjectives
   }
 }

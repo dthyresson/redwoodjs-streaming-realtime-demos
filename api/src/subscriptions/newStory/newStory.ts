@@ -4,6 +4,7 @@ import type { Story, StoryInput } from 'types/graphql'
 import type { PubSub } from '@redwoodjs/realtime'
 
 import { logger } from 'src/lib/logger'
+import { buildStoryId } from 'src/lib/stories'
 
 export const schema = gql`
   type Subscription {
@@ -25,7 +26,8 @@ const newStory = {
     ) => {
       logger.debug({ input }, 'newStory subscription')
 
-      const id = [input.animalId, input.colorId, input.activityId].join('|')
+      const id = buildStoryId(input)
+
       return pubSub.subscribe('newStory', id)
     },
     resolve: (payload) => {

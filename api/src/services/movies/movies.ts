@@ -1,4 +1,3 @@
-import OpenAI from 'openai'
 import type { Movie, MovieMashup, MovieMashupInput } from 'types/graphql'
 
 import type { LiveQueryStorageMechanism } from '@redwoodjs/realtime'
@@ -6,13 +5,10 @@ import type { LiveQueryStorageMechanism } from '@redwoodjs/realtime'
 import { logger } from 'src/lib/logger'
 import { MovieMashups } from 'src/lib/movieMashups'
 import { Movies } from 'src/lib/movies'
+import { openai } from 'src/lib/openai'
 
 const movieMashups = new MovieMashups()
 const movieData = new Movies()
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
 
 export const movies = (): Movie[] => {
   return movieData.all()

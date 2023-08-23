@@ -1,21 +1,23 @@
-import OpenAI from 'openai'
 import type { StoryInput, Story } from 'types/graphql'
 
 import { logger } from 'src/lib/logger'
-import { Animals, Colors, Activities } from 'src/lib/stories'
+import { openai } from 'src/lib/openai'
+import { Animals, Colors, Activities, Adjectives } from 'src/lib/stories'
+import { buildStoryId } from 'src/lib/stories'
 import type { NewStoryChannelType } from 'src/subscriptions/newStory/newStory'
 
 const animals = new Animals()
 const colors = new Colors()
 const activities = new Activities()
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+const adjectives = new Adjectives()
 
 const PROMPT = `Write a short children's bedtime story about an Animal that is a given Color and that does a given Activity.
 
-Give the animal a cute name. The story should teach a lesson and have a happy ending.
+Give the animal a cute name.
+
+The story should teach a lesson.
+
+The story should be told in a quality, style and feeling of the given Adjective.
 
 The story should be no longer than 3 paragraphs.`
 
@@ -23,11 +25,12 @@ export const tellStory = async (
   { input }: { input: StoryInput },
   { context }: { context: { pubSub: NewStoryChannelType } }
 ): Promise<Story> => {
+  const id = buildStoryId(input)
+
   const animal = animals.get(input.animalId)
   const color = colors.get(input.colorId)
   const activity = activities.get(input.activityId)
-
-  const id = [animal.id, color.id, activity.id].join('|')
+  const adjective = adjectives.get(input.adjectiveId)
 
   const stream = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
@@ -38,11 +41,11 @@ export const tellStory = async (
       },
       {
         role: 'user',
-        content: `Animal: ${animal.name}\nColor: ${color.name}\nActivity: ${activity.name}}`,
+        content: `Animal: ${animal.name}\nColor: ${color.name}\nActivity: ${activity.name}}\nAdjective: ${adjective.name}`,
       },
     ],
     temperature: 1,
-    max_tokens: 256,
+    max_tokens: 512,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
@@ -56,7 +59,8 @@ export const tellStory = async (
     animal,
     color,
     activity,
-    title: `The ${color.name} ${animal.name} who ${activity.name}`,
+    adjective,
+    title: `A ${adjective.name} story about a ${color.name} ${animal.name} who ${activity.name}`,
     body,
   }
 

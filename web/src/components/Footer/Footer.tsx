@@ -22,6 +22,16 @@ const menuOptions = [
     subtitle: 'Countdown Timer',
     slug: '/countdown',
   },
+  {
+    name: 'Subscription',
+    subtitle: 'Bedtime Story AI Demo',
+    slug: '/bedtime-story',
+  },
+  {
+    name: 'Live Query',
+    subtitle: 'Movie Mashup AI Demo',
+    slug: '/movie-mashup',
+  },
 ]
 
 const DropdownMenu = ({ menuOptions, curOption }) => {

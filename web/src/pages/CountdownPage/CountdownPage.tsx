@@ -50,18 +50,6 @@ const CountdownPage = () => {
         </pre>
       </Drawer>
 
-      <Drawer theme="vividYellow">
-        <pre>
-          <HistoryContext.Consumer>
-            {(value) => (
-              <p key={`chat-history-${value}`}>
-                {JSON.stringify(value, null, 2)}
-              </p>
-            )}
-          </HistoryContext.Consumer>
-        </pre>
-      </Drawer>
-
       <div className="center h-[calc(100vh-64px)] w-screen bg-gray-950">
         <a
           href="https://github.com"

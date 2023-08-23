@@ -10,6 +10,6 @@ export class Movies {
   }
 
   all(): Movie[] {
-    return this.movies
+    return this.movies.sort((a, b) => a.title.localeCompare(b.title))
   }
 }

@@ -108,8 +108,8 @@ const MovieMashupPage = () => {
         <GitHubCorner />
       </a>
 
-      <div className="mb-24 grid grid-cols-2 gap-4 p-12 ">
-        <div className="grid grid-cols-4 justify-around gap-4 overflow-scroll">
+      <div className="mb-24 grid  grid-cols-2 gap-4 p-12">
+        <div className="grid max-h-screen grid-cols-4 justify-around gap-4 overflow-scroll">
           {movieData &&
             movieData.movies.map((movie) => (
               <div
@@ -119,13 +119,19 @@ const MovieMashupPage = () => {
                     ? 'rounded-md border-2 border-amber-500 bg-amber-400'
                     : secondMovieId === movie.id
                     ? 'rounded-md border-2 border-purple-500 bg-purple-400'
-                    : 'rounded-md border-2 border-blue-100 bg-blue-200 hover:bg-sky-300'
+                    : `rounded-md border-2 border-blue-100 bg-blue-200 ${
+                        firstMovieId
+                          ? 'hover:bg-purple-300'
+                          : secondMovieId
+                          ? 'hover:bg-amber-300'
+                          : 'hover:bg-blue-300'
+                      }`
                 }`}
                 onClick={() => handleMovieClick(movie.id)}
               >
                 <div className="flex items-center justify-center">
                   <img
-                    className="w-24"
+                    className="w-24 rounded-md shadow-md"
                     alt={movie.title}
                     src={`https://www.themoviedb.org/t/p/w300_and_h450_bestv2${movie.photo}`}
                   />
@@ -138,6 +144,26 @@ const MovieMashupPage = () => {
         </div>
 
         <div className="h-full rounded-md bg-sky-200 p-2">
+          {!movieMashupData ||
+            (movieMashupData.movieMashup.mashup.body === '' && (
+              <div className="flex h-full items-center justify-center">
+                <button
+                  type="button"
+                  className="rounded-md bg-sky-600 px-3.5 py-2.5 text-2xl font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                  onClick={onMashup}
+                  disabled={!firstMovieId || !secondMovieId}
+                >
+                  Mashup!
+                </button>
+              </div>
+            ))}
+          {!movieMashupData && (
+            <div className="flex h-full items-center justify-center text-2xl font-extrabold">
+              {!firstMovieId && !secondMovieId && <>Pick two movies!</>}
+              {firstMovieId && !secondMovieId && <>Pick another movie!</>}
+              {!firstMovieId && secondMovieId && <>Pick another movie!</>}
+            </div>
+          )}
           {movieMashupData && (
             <div key={`movie-mashup-${movieMashupData.movieMashup.id}`}>
               <h2>{movieMashupData.movieMashup.mashup.title}</h2>
@@ -146,19 +172,6 @@ const MovieMashupPage = () => {
               />
             </div>
           )}
-          {!movieMashupData ||
-            (movieMashupData.movieMashup.mashup.body === '' && (
-              <div className="flex h-full items-center  justify-center">
-                <button
-                  type="button"
-                  className="rounded-md bg-sky-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
-                  onClick={onMashup}
-                  disabled={!firstMovieId || !secondMovieId}
-                >
-                  Mashup
-                </button>
-              </div>
-            ))}
         </div>
       </div>
     </div>

@@ -99,4 +99,44 @@ export const MOVIES = [
     title: "Ferris Bueller's Day Off",
     photo: '/9LTQNCvoLsKXP0LtaKAaYVtRaQL.jpg',
   },
+  {
+    id: '1637-speed',
+    title: 'Speed',
+    photo: '/o1Zs7VaS9y2GYH9CLeWxaVLWd3x.jpg',
+  },
+  {
+    id: '5683-pee-wees-adventure',
+    title: "Pee-wee's Big Adventure",
+    photo: '/414IUXc54mrhX88ZUQiRDLXn01i.jpg',
+  },
+  {
+    id: '8009-highlander',
+    title: 'Highlander',
+    photo: '/8Z8dptJEypuLoOQro1WugD855YE.jpg',
+  },
+  {
+    id: '2605-short-circuit',
+    title: 'Short Circuit',
+    photo: '/e3eimdUK6lLe0iaSlLrYVQF3yeL.jpg',
+  },
+  {
+    id: '9602-coming-to-america',
+    title: 'Coming to America',
+    photo: '/djRAvxyvvN2yqlJKDbT3uy4vOBw.jpg',
+  },
+  {
+    id: '1621-trading-places',
+    title: 'Trading Places',
+    photo: '/8mBuLCOcpWnmYtZc4aqtvDXslv6.jpg',
+  },
+  {
+    id: '8467-dumb-and-dumber',
+    title: 'Dumb and Dumber',
+    photo: '/4LdpBXiCyGKkR8FGHgjKlphrfUc.jpg',
+  },
+  {
+    id: '3049-ace-ventura-pet-detective',
+    title: 'Ace Ventura: Pet Detective',
+    photo: '/pqiRuETmuSybfnVZ7qyeoXhQyN1.jpg',
+  },
 ]

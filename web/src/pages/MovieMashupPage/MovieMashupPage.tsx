@@ -152,7 +152,7 @@ const MovieMashupPage = () => {
         <GitHubCorner />
       </a>
 
-      <div className="grid grid-cols-2 gap-4 p-12">
+      <div className="mb-24 grid grid-cols-2 gap-4 p-12 ">
         <div className="grid grid-cols-4 justify-around gap-4 overflow-scroll">
           {movieData &&
             movieData.movies.map((movie) => (

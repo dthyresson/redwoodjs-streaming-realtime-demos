@@ -1,4 +1,11 @@
-import type { StoryInput, Story } from 'types/graphql'
+import type {
+  Animal,
+  Color,
+  Activity,
+  Adjective,
+  StoryInput,
+  Story,
+} from 'types/graphql'
 
 import { logger } from 'src/lib/logger'
 import { openai } from 'src/lib/openai'
@@ -6,10 +13,10 @@ import { Animals, Colors, Activities, Adjectives } from 'src/lib/stories'
 import { buildStoryId } from 'src/lib/stories'
 import type { NewStoryChannelType } from 'src/subscriptions/newStory/newStory'
 
-const animals = new Animals()
-const colors = new Colors()
-const activities = new Activities()
-const adjectives = new Adjectives()
+const animalsManager = new Animals()
+const colorsManager = new Colors()
+const activitiesManager = new Activities()
+const adjectivesManager = new Adjectives()
 
 const PROMPT = `Write a short children's bedtime story about an Animal that is a given Color and that does a given Activity.
 
@@ -27,10 +34,10 @@ export const tellStory = async (
 ): Promise<Story> => {
   const id = buildStoryId(input)
 
-  const animal = animals.get(input.animalId)
-  const color = colors.get(input.colorId)
-  const activity = activities.get(input.activityId)
-  const adjective = adjectives.get(input.adjectiveId)
+  const animal = animalsManager.get(input.animalId)
+  const color = colorsManager.get(input.colorId)
+  const activity = activitiesManager.get(input.activityId)
+  const adjective = adjectivesManager.get(input.adjectiveId)
 
   const stream = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
@@ -76,3 +83,8 @@ export const tellStory = async (
 
   return story
 }
+
+export const animals = (): Animal[] => animalsManager.all()
+export const colors = (): Color[] => colorsManager.all()
+export const activities = (): Activity[] => activitiesManager.all()
+export const adjectives = (): Adjective[] => adjectivesManager.all()

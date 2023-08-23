@@ -28,7 +28,7 @@ export class Animals {
   }
 
   all(): Animal[] {
-    return this.animals
+    return this.animals.sort((a, b) => a.name.localeCompare(b.name))
   }
 }
 
@@ -40,7 +40,7 @@ export class Colors {
   }
 
   all(): Color[] {
-    return this.colors
+    return this.colors.sort((a, b) => a.name.localeCompare(b.name))
   }
 }
 
@@ -52,7 +52,7 @@ export class Activities {
   }
 
   all(): Activity[] {
-    return this.activities
+    return this.activities.sort((a, b) => a.name.localeCompare(b.name))
   }
 }
 
@@ -64,6 +64,6 @@ export class Adjectives {
   }
 
   all(): Adjective[] {
-    return this.adjectives
+    return this.adjectives.sort((a, b) => a.name.localeCompare(b.name))
   }
 }

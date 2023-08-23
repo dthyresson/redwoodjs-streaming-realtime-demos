@@ -38,4 +38,11 @@ export const schema = gql`
   type Mutation {
     tellStory(input: StoryInput!): Story! @skipAuth
   }
+
+  type Query {
+    animals: [Animal!]! @skipAuth
+    colors: [Color!]! @skipAuth
+    activities: [Activity!]! @skipAuth
+    adjectives: [Adjective!]! @skipAuth
+  }
 `

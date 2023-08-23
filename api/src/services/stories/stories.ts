@@ -2,7 +2,12 @@ import OpenAI from 'openai'
 import type { StoryInput, Story } from 'types/graphql'
 
 import { logger } from 'src/lib/logger'
+import { Animals, Colors, Activities } from 'src/lib/stories'
 import type { NewStoryChannelType } from 'src/subscriptions/newStory/newStory'
+
+const animals = new Animals()
+const colors = new Colors()
+const activities = new Activities()
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -18,7 +23,11 @@ export const tellStory = async (
   { input }: { input: StoryInput },
   { context }: { context: { pubSub: NewStoryChannelType } }
 ): Promise<Story> => {
-  const id = [input.animalId, input.colorId, input.activityId].join('|')
+  const animal = animals.get(input.animalId)
+  const color = colors.get(input.colorId)
+  const activity = activities.get(input.activityId)
+
+  const id = [animal.id, color.id, activity.id].join('|')
 
   const stream = await openai.chat.completions.create({
     model: 'gpt-3.5-turbo',
@@ -29,7 +38,7 @@ export const tellStory = async (
       },
       {
         role: 'user',
-        content: `Animal: Otter\nColor: purple\nActivity: Rides a roller coaster`,
+        content: `Animal: ${animal.name}\nColor: ${color.name}\nActivity: ${activity.name}}`,
       },
     ],
     temperature: 1,
@@ -44,20 +53,11 @@ export const tellStory = async (
 
   const story = {
     id: '1',
-    title: 'adfsada',
+    animal,
+    color,
+    activity,
+    title: `The ${color.name} ${animal.name} who ${activity.name}`,
     body,
-    animal: {
-      id: input.animalId,
-      name: 'Penguin',
-    },
-    color: {
-      id: input.colorId,
-      name: 'orange',
-    },
-    activity: {
-      id: input.activityId,
-      name: 'First Day of School',
-    },
   }
 
   for await (const part of stream) {

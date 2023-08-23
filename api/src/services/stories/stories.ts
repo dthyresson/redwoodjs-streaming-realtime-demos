@@ -55,7 +55,7 @@ export const tellStory = async (
   let body = ''
 
   const story = {
-    id: '1',
+    id,
     animal,
     color,
     activity,

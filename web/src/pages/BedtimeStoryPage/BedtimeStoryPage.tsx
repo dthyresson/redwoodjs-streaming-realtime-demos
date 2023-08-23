@@ -6,7 +6,7 @@ import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
 
 const BedtimeStoryPage = () => {
   return (
-    <div className="h-screen bg-[#a855f7]">
+    <div className="h-screen w-screen bg-[#a855f7]">
       <MetaTags title="Bedtime Story" description="Tell me a story..." />
 
       <Drawer>

@@ -35,7 +35,7 @@ Give the new movie a title and tagline that could be used on a movie poster.
 The treatment should be no longer than 3 sentences.
 
 Return the title, tagline, and treatment of the new movie as text with labels:
-Title, Tagline, and Treatment.
+Title, Tagline, and Treatment and format as markdown where the title is a heading, tagline is a subheading and treatment uses bold for emphasis on some exciting words.
 `
 
 export const mashupMovies = async (

@@ -76,6 +76,7 @@ const BedtimeStoryPage = () => {
   const [adjectiveId, setAdjectiveId] = useState(null)
   const [title, setTitle] = useState(null)
   const [body, setBody] = useState(null)
+  const history = React.useContext(HistoryContext)
 
   const handleAnimalClick = (id) => {
     if (animalId === id) {
@@ -117,6 +118,7 @@ const BedtimeStoryPage = () => {
         console.log(story)
         setTitle(story.title)
         setBody(story.body)
+        history.unshift(data.data)
       }
     },
   })
@@ -145,7 +147,10 @@ const BedtimeStoryPage = () => {
         <pre>
           <HistoryContext.Consumer>
             {(value) => (
-              <p key={`countdown-history-${value}`}>
+              <p
+                key={`bedtime-story-history-${value}`}
+                className="w-[400px] max-w-[400px] overflow-scroll"
+              >
                 {JSON.stringify(value, null, 2)}
               </p>
             )}

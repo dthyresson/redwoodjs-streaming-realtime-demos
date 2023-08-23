@@ -93,6 +93,7 @@ const MarkdownFormatter = ({ content }) => {
 const MovieMashupPage = () => {
   const [firstMovieId, setFirstMovieId] = useState(null)
   const [secondMovieId, setSecondMovieId] = useState(null)
+  const history = React.useContext(HistoryContext)
 
   const handleMovieClick = (movieId) => {
     if (firstMovieId === movieId) {
@@ -114,6 +115,9 @@ const MovieMashupPage = () => {
         firstMovieId,
         secondMovieId,
       },
+    },
+    onCompleted: (data) => {
+      history.unshift(data.movieMashup)
     },
   })
 
@@ -141,7 +145,10 @@ const MovieMashupPage = () => {
         <pre>
           <HistoryContext.Consumer>
             {(value) => (
-              <p key={`countdown-history-${value}`}>
+              <p
+                key={`movie-mashup-history-${value}`}
+                className="w-[400px] max-w-[400px] overflow-scroll"
+              >
                 {JSON.stringify(value, null, 2)}
               </p>
             )}

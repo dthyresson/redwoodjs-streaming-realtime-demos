@@ -139,4 +139,104 @@ export const MOVIES = [
     title: 'Ace Ventura: Pet Detective',
     photo: '/pqiRuETmuSybfnVZ7qyeoXhQyN1.jpg',
   },
+  {
+    id: '1788-footloose',
+    title: 'Footloose',
+    photo: '/fFSoebdakq45MEEUXGS2cWonGOh.jpg',
+  },
+  {
+    id: '14370-real-genius',
+    title: 'Real Genius',
+    photo: '/5mVimQD1XOMLzbO2Qug0JQxh70S.jpg',
+  },
+  {
+    id: '11884-the-last-starfighter',
+    title: 'The Last Starfighter',
+    photo: '/an1H0DPADLDlEsiUy8vE9AWqrhm.jpg',
+  },
+  {
+    id: '14367-adventures-in-babysitting',
+    title: 'Adventures in Babysitting',
+    photo: '/8QiAj0Xw2UMeZMIIfZKeNoIsszs.jpg',
+  },
+  {
+    id: '11977-caddyshack',
+    title: 'Caddyshack',
+    photo: '/8mS6b2ATYjynchFX9trkzwm5mjA.jpg',
+  },
+  {
+    id: '1648-bill-and-teds-excellent-adventure',
+    title: "Bill & Ted's Excellent Adventure",
+    photo: '/tV25lGWGWGEqUe3U0xjQTBgilSx.jpg',
+  },
+  {
+    id: '97-tron',
+    title: 'Tron',
+    photo: '/zwSFEczP7AzqugAHHIX3zHniT0t.jpg',
+  },
+  {
+    id: '36819-time-bandits',
+    title: 'Time Bandits',
+    photo: '/4VZtpwdhHQSa4LUkvujyGAHb1hG.jpg',
+  },
+  {
+    id: '860-wargames',
+    title: 'WarGames',
+    photo: '/ndORBCvw8TJaQYvBgkYGg0IWrRM.jpg',
+  },
+  {
+    id: '623-a-fish-called-wanda',
+    title: 'A Fish Called Wanda',
+    photo: '/TvK0D3B8ghy3QMdm9YDjec3U4M.jpg',
+  },
+  {
+    id: '941-lethal-weapon',
+    title: 'Lethal Weapon',
+    photo: '/fTq4ThIP3pQTYR9eDepsbDHqdcs.jpg',
+  },
+  {
+    id: '856-who-framed-roger-rabbit',
+    title: 'Who Framed Roger Rabbit',
+    photo: '/lYfRc57Kx9VgLZ48iulu0HKnM15.jpg',
+  },
+  {
+    id: '11153-national-lampoons-vacation',
+    title: "National Lampoon's Vacation",
+    photo: '/q3DvoqY06yZnRp9faH6uge7n7VP.jpg',
+  },
+  {
+    id: '927-gremlins',
+    title: 'Gremlins',
+    photo: '/72Y1X9pMSjXQ7mKB6pBEoMhL0OQ.jpg',
+  },
+  {
+    id: '97020-robocop',
+    title: 'RoboCop',
+    photo: '/gM5ql3BKYmHG3WtZ0buKXN7xY8O.jpg',
+  },
+  {
+    id: '813-airplane',
+    title: 'Airplane!',
+    photo: '/7Q3efxd3AF1vQjlSxnlerSA7RzN.jpg',
+  },
+  {
+    id: '15144-sixteen-candles',
+    title: 'Sixteen Candles',
+    photo: '/1mHOcGKgobta0d20Hh66zuIpYRb.jpg',
+  },
+  {
+    id: '378-raising-arizona',
+    title: 'Raising Arizona',
+    photo: '/m5Zp4K4hKdPhsBl3E0p8I7QomlT.jpg',
+  },
+  {
+    id: '957-spaceballs',
+    title: 'Spaceballs',
+    photo: '/o624HTt93iIJIc1Sg5hNkDTnk5l.jpg',
+  },
+  {
+    id: '6978-big-trouble-in-little-china',
+    title: 'Big Trouble in Little China',
+    photo: '/vWtOXvlcXCpb74GGfqYAnSbnm0L.jpg',
+  },
 ]

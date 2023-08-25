@@ -6,7 +6,12 @@ import { useLocation } from '@redwoodjs/router'
 
 import Icon from '../Icon/Icon'
 
-const menuOptions = [
+export const menuOptions = [
+  {
+    name: 'Realtime Demos',
+    subtitle: 'Pick a demo!',
+    slug: '/',
+  },
   {
     name: 'Subscription',
     subtitle: 'Chat Demo',

@@ -75,6 +75,7 @@ async function serve() {
     // getCurrentUser,
     loggerConfig: {
       logger: logger,
+      options: { query: true },
     },
     graphiQLEndpoint: enableWeb ? '/.redwood/functions/graphql' : '/graphql',
     sdls,

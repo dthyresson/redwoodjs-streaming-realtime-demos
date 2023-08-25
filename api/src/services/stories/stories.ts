@@ -73,15 +73,17 @@ export const tellStory = async (
     body,
   }
 
+  logger.debug('OpenAI stream received started ...')
   for await (const part of stream) {
     const { content } = part.choices[0].delta
-    logger.debug({ content }, 'OpenAI stream part')
+    logger.debug({ content }, 'OpenAI stream received ...')
     body += content ?? ''
     story.body = body
-    logger.debug({ body }, 'Stream body')
-    logger.debug({ story }, 'New story published')
+    logger.debug({ id }, 'Publishing newStory topic')
+
     context.pubSub.publish('newStory', id, story)
   }
+  logger.debug('OpenAI stream received ended.')
 
   return story
 }

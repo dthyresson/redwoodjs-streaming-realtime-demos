@@ -81,20 +81,21 @@ export const mashupMovies = async (
     })
   }
 
+  logger.debug('OpenAI stream received started ...')
+
   for await (const part of stream) {
     const { content } = part.choices[0].delta
-    logger.debug({ content }, 'OpenAI stream part')
+    logger.debug({ content }, 'OpenAI stream received ...')
     body += content ?? ''
     movieMashups.get(id).mashup.body = body
     logger.debug(
       { id, mashup: movieMashups.get(id) },
       'Invalidating movie mashup key'
     )
+    logger.debug('OpenAI stream received ended.')
 
     context.liveQueryStore.invalidate(`MovieMashup:${id}`)
   }
-
-  logger.debug({ body }, 'Mashup body')
 
   return {
     id,

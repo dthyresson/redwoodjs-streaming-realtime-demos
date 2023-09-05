@@ -82,7 +82,7 @@ export const ACTIVITIES = [
   { id: '3', name: 'goes to the zoo' },
   { id: '4', name: 'goes to the aquarium' },
   { id: '5', name: 'goes to the museum' },
-  { id: '6', name: 'first day of school' },
+  { id: '6', name: 'attends the first day of school' },
   { id: '7', name: 'goes to the park' },
   { id: '8', name: 'goes to the movies' },
   { id: '9', name: 'goes to a concert' },

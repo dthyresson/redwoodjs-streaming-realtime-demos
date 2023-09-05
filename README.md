@@ -126,7 +126,6 @@ Counts down from a starting values by an interval.
 
 This example showcases how a subscription can yields its own response.
 
-
 #### Test
 
 ```ts
@@ -181,7 +180,23 @@ Powered by OpenAI, this movie tagline and treatment updates on each stream conte
 ```ts
 context.liveQueryStore.invalidate(`MovieMashup:${id}`)
 ```
-### Features
+
+## RedwoodJS Realtime Setup
+
+This project is already setup for Realtime.
+
+To setup a new project:
+
+* `yarn rw exp setup server-file`
+* `yarn rw exp setup realtime`
+
+You will get:
+
+* `api/server.ts` where you configure your Fastify server and GraphQL
+* `api/lib/realtime.ts` where you consume your subscriptions and configure realtime with an in-memory or Redis store
+* The auction, countdown, and chat examples. You'll find sdl, services and subscriptions for each. Note there is no UI setup.
+
+## Features
 
 RedwoodJS Realtime handles the hard parts of a GraphQL Realtime implementation by automatically:
 

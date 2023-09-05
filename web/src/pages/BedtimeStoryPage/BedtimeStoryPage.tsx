@@ -164,20 +164,7 @@ const BedtimeStoryPage = () => {
         {loading && <div>Loading...</div>}
         {storyConfig && (
           <div className="ml-20 grid grid-flow-row auto-rows-max gap-4 overflow-scroll rounded-md">
-            <div className="grid grid-cols-4 gap-4 overflow-scroll bg-gray-50 p-4">
-              {storyConfig.animals.map((animal) => (
-                <p
-                  className={`cursor-pointer rounded-md border-2 bg-gray-100 p-2 text-center hover:bg-gray-200 ${
-                    animalId === animal.id &&
-                    'bg-gray-500 text-white hover:bg-gray-500'
-                  }`}
-                  key={`animal-id-${animal.id}`}
-                  onClick={() => handleAnimalClick(animal.id)}
-                >
-                  {animal.name}
-                </p>
-              ))}
-            </div>
+            <h2>Tell me a story about the ...</h2>
             <div className="grid grid-cols-4 gap-4 overflow-scroll bg-gray-50 p-4">
               {storyConfig.colors.map((color) => (
                 <p
@@ -193,20 +180,6 @@ const BedtimeStoryPage = () => {
               ))}
             </div>
             <div className="grid grid-cols-4 gap-4 overflow-scroll bg-gray-50 p-4">
-              {storyConfig.activities.map((activity) => (
-                <p
-                  className={`cursor-pointer rounded-md border-2 bg-gray-100 p-2 text-center hover:bg-gray-200 ${
-                    activityId === activity.id &&
-                    'bg-gray-500 text-white hover:bg-gray-500'
-                  }`}
-                  key={`activity-id-${activity.id}`}
-                  onClick={() => handleActivityClick(activity.id)}
-                >
-                  {activity.name}
-                </p>
-              ))}
-            </div>
-            <div className="grid grid-cols-4 gap-4 overflow-scroll bg-gray-50 p-4">
               {storyConfig.adjectives.map((adjective) => (
                 <p
                   className={`cursor-pointer rounded-md border-2 bg-gray-100 p-2 text-center hover:bg-gray-200 ${
@@ -217,6 +190,34 @@ const BedtimeStoryPage = () => {
                   onClick={() => handleAdjectiveClick(adjective.id)}
                 >
                   {adjective.name}
+                </p>
+              ))}
+            </div>
+            <div className="grid grid-cols-4 gap-4 overflow-scroll bg-gray-50 p-4">
+              {storyConfig.animals.map((animal) => (
+                <p
+                  className={`cursor-pointer rounded-md border-2 bg-gray-100 p-2 text-center hover:bg-gray-200 ${
+                    animalId === animal.id &&
+                    'bg-gray-500 text-white hover:bg-gray-500'
+                  }`}
+                  key={`animal-id-${animal.id}`}
+                  onClick={() => handleAnimalClick(animal.id)}
+                >
+                  {animal.name}
+                </p>
+              ))}
+            </div>
+            <div className="grid grid-cols-4 gap-4 overflow-scroll bg-gray-50 p-4">
+              {storyConfig.activities.map((activity) => (
+                <p
+                  className={`cursor-pointer rounded-md border-2 bg-gray-100 p-2 text-center hover:bg-gray-200 ${
+                    activityId === activity.id &&
+                    'bg-gray-500 text-white hover:bg-gray-500'
+                  }`}
+                  key={`activity-id-${activity.id}`}
+                  onClick={() => handleActivityClick(activity.id)}
+                >
+                  {activity.name}
                 </p>
               ))}
             </div>

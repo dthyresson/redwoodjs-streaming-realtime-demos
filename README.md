@@ -237,9 +237,7 @@ Regardless of the implementation chosen, **a stateful server and store are neede
 
 RedwoodJS has a first-class developer experience for GraphQL subscriptions.
 
-<diagram>
-
-Subscribe to Events
+#### Subscribe to Events
 
 - Granular information on what data changed
 - Why has the data changed?
@@ -264,9 +262,7 @@ RedwoodJS has made it super easy to add live queries to your GraphQL server! You
 
 The invalidation mechanism is based on GraphQL ID fields and schema coordinates. Once a query operation has been invalidated, the query is re-executed, and the result is pushed to the client.
 
-<diagram>
-
-Listen for Data Changes
+##### Listen for Data Changes
 
 - I'm not interested in what exactly changed it.
 - Just give me the data.
@@ -303,7 +299,20 @@ mutation MakeBid {
 
 ## How do I choose Subscriptions or Live Queries?
 
-TODO
+![image](https://github.com/ahaywood/redwoodjs-streaming-realtime-demos/assets/1051633/e3c51908-434c-4396-856a-8bee7329bcdd)
+
+When deciding on how to offer realtime data updates in your RedwoodJS app, you’ll want to consider:
+
+- How frequently do your users require information updates?
+    - Determine the value of "real-time" versus "near real-time" to your users. Do they need to know in less than 1-2 seconds, or is 10, 30, or 60 seconds acceptable for them to receive updates?
+    - Consider the criticality of the data update. Is it low, such as a change in shipment status, or higher, such as a change in stock price for an investment app?
+    - Consider the cost of maintaining connections and tracking updates across your user base. Is the infrastructure cost justifiable?
+    - If you don't require "real" real-time, consider polling for data updates on a reasonable interval. According to Apollo, [in most cases](https://www.apollographql.com/docs/react/data/subscriptions/), your client should not use subscriptions to stay up to date with your backend. Instead, you should poll intermittently with queries or re-execute queries on demand when a user performs a relevant action, such as clicking a button.
+- How are you deploying? Serverless or Serverful?
+    - Real-time options depend on your deployment method.
+    - If you are using a serverless architecture, your application cannot maintain a stateful connection to your users' applications. Therefore, it's not easy to "push," "publish," or "stream" data updates to the web client.
+        - In this case, you may need to look for third-party solutions that manage the infrastructure to maintain such stateful connections to your web client, such as [Supabase Realtime](https://supabase.com/realtime), [SendBird](https://sendbird.com/), [Pusher](https://pusher.com/), or consider creating your own [AWS SNS-based](https://docs.aws.amazon.com/sns/latest/dg/welcome.html) functionality.
+
 ### PubSub and LiveQueryStore
 
 By setting up RedwoodJS Realtime, the GraphQL server adds two helpers on the context:

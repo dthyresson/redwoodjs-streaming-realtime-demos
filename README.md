@@ -77,8 +77,7 @@ When a bid is made, the auction updates via a Live Query due to the invalidation
 #### Simulate
 
 ```bash
-./scripts/simulate_bids.sh --h
-Invalid option: --
+./scripts/simulate_bids.sh -h
 Usage: ./scripts/simulate_bids.sh [options]
 
 Options:

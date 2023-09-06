@@ -51,7 +51,11 @@ const MarkdownFormatter = ({ content }) => {
         return part
       })
       formattedElements.push(
-        React.createElement('p', { key: index }, ...formattedParts)
+        React.createElement(
+          'p',
+          { key: index, className: 'font-semibold' },
+          ...formattedParts
+        )
       )
     } else if (line.trim() === '') {
       // Handle empty line as a newline
@@ -60,7 +64,9 @@ const MarkdownFormatter = ({ content }) => {
       )
     } else {
       // Regular text
-      formattedElements.push(React.createElement('p', { key: index }, line))
+      formattedElements.push(
+        React.createElement('p', { key: index, className: 'leading-10' }, line)
+      )
     }
   })
 

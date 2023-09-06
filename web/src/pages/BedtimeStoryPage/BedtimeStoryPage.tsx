@@ -71,6 +71,7 @@ const NEW_STORY_SUBSCRIPTION = gql`
 const BedtimeStoryPage = () => {
   const { data: storyConfig, loading } = useQuery(GET_STORY_CONFIG)
 
+  const [storyLoading, setStoryLoading] = useState(false)
   const [animalId, setAnimalId] = useState(null)
   const [colorId, setColorId] = useState(null)
   const [activityId, setActivityId] = useState(null)
@@ -80,6 +81,8 @@ const BedtimeStoryPage = () => {
   const history = React.useContext(HistoryContext)
 
   const handleAnimalClick = (id) => {
+    setStoryLoading(false)
+
     if (animalId === id) {
       setAnimalId(null) // Deselect if already selected
     } else {
@@ -88,6 +91,8 @@ const BedtimeStoryPage = () => {
   }
 
   const handleColorClick = (id) => {
+    setStoryLoading(false)
+
     if (colorId === id) {
       setColorId(null) // Deselect if already selected
     } else {
@@ -96,6 +101,8 @@ const BedtimeStoryPage = () => {
   }
 
   const handleActivityClick = (id) => {
+    setStoryLoading(false)
+
     if (activityId === id) {
       setActivityId(null) // Deselect if already selected
     } else {
@@ -104,6 +111,8 @@ const BedtimeStoryPage = () => {
   }
 
   const handleAdjectiveClick = (id) => {
+    setStoryLoading(false)
+
     if (adjectiveId === id) {
       setAdjectiveId(null) // Deselect if already selected
     } else {
@@ -116,7 +125,6 @@ const BedtimeStoryPage = () => {
     onData: ({ data }) => {
       const story = data && data.data?.['newStory']
       if (story) {
-        console.log(story)
         setTitle(story.title)
         setBody(story.body)
         history.unshift(data.data)
@@ -127,6 +135,9 @@ const BedtimeStoryPage = () => {
   const [create] = useMutation(TELL_STORY_MUTATION)
 
   const onStory = (_data) => {
+    setStoryLoading(true)
+    setTitle("I'm writing your story...")
+    setBody(null)
     create({
       variables: {
         input: {
@@ -171,13 +182,13 @@ const BedtimeStoryPage = () => {
       <div className="mb-24 grid grid-cols-2 gap-4 p-4">
         {loading && <div>Loading...</div>}
         {storyConfig && (
-          <div className="ml-20 grid grid-flow-row auto-rows-max gap-4 overflow-scroll rounded-md">
-            <div className="grid grid-cols-4 gap-4 overflow-scroll bg-gray-50 p-4">
+          <div className="grid-flow-rows grid-rows-max ml-20 grid gap-4 rounded-md">
+            <div className="grid grid-cols-4 gap-4 bg-emerald-50 p-4">
               {storyConfig.adjectives.map((adjective) => (
                 <p
-                  className={`cursor-pointer rounded-md border-2 bg-gray-100 p-2 text-center hover:bg-gray-200 ${
+                  className={`flex cursor-pointer justify-center rounded-md border-2 bg-white p-2 text-center hover:bg-emerald-600 hover:text-white ${
                     adjectiveId === adjective.id &&
-                    'bg-gray-500 text-white hover:bg-gray-500'
+                    'bg-emerald-500 text-white hover:bg-emerald-600'
                   }`}
                   key={`adjective-id-${adjective.id}`}
                   onClick={() => handleAdjectiveClick(adjective.id)}
@@ -186,12 +197,12 @@ const BedtimeStoryPage = () => {
                 </p>
               ))}
             </div>
-            <div className="grid grid-cols-4 gap-4 overflow-scroll bg-gray-50 p-4">
+            <div className="grid grid-cols-4 gap-4 bg-blue-50 p-4">
               {storyConfig.colors.map((color) => (
                 <p
-                  className={`cursor-pointer rounded-md border-2 bg-gray-100 p-2 text-center hover:bg-gray-200 ${
+                  className={`flex cursor-pointer justify-center rounded-md border-2 bg-white p-2 text-center hover:bg-blue-600 hover:text-white ${
                     colorId === color.id &&
-                    'bg-gray-500 text-white hover:bg-gray-500'
+                    'bg-blue-500 text-white hover:bg-blue-600'
                   }`}
                   key={`color-id-${color.id}`}
                   onClick={() => handleColorClick(color.id)}
@@ -200,12 +211,12 @@ const BedtimeStoryPage = () => {
                 </p>
               ))}
             </div>{' '}
-            <div className="grid grid-cols-4 gap-4 overflow-scroll bg-gray-50 p-4">
+            <div className="grid grid-cols-4 gap-4 bg-violet-100 p-4">
               {storyConfig.animals.map((animal) => (
                 <p
-                  className={`cursor-pointer rounded-md border-2 bg-gray-100 p-2 text-center hover:bg-gray-200 ${
+                  className={`flex cursor-pointer justify-center rounded-md border-2 bg-white p-2 text-center hover:bg-violet-600 hover:text-white ${
                     animalId === animal.id &&
-                    'bg-gray-500 text-white hover:bg-gray-500'
+                    'bg-violet-500 text-white hover:bg-violet-600'
                   }`}
                   key={`animal-id-${animal.id}`}
                   onClick={() => handleAnimalClick(animal.id)}
@@ -214,12 +225,12 @@ const BedtimeStoryPage = () => {
                 </p>
               ))}
             </div>
-            <div className="grid grid-cols-4 gap-4 overflow-scroll bg-gray-50 p-4">
+            <div className="grid grid-cols-4 gap-4 bg-pink-100 p-4">
               {storyConfig.activities.map((activity) => (
                 <p
-                  className={`cursor-pointer rounded-md border-2 bg-gray-100 p-2 text-center hover:bg-gray-200 ${
+                  className={`flex cursor-pointer justify-center rounded-md border-2 bg-white p-2 text-center hover:bg-pink-600 hover:text-white ${
                     activityId === activity.id &&
-                    'bg-gray-500 text-white hover:bg-gray-500'
+                    'bg-pink-500 text-white hover:bg-pink-600'
                   }`}
                   key={`activity-id-${activity.id}`}
                   onClick={() => handleActivityClick(activity.id)}
@@ -231,15 +242,23 @@ const BedtimeStoryPage = () => {
           </div>
         )}
         <div className="h-full rounded-md bg-sky-200 p-12">
-          <div className="mb-12 flex justify-center">
-            <button
-              type="button"
-              className="h-14 rounded-md bg-sky-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
-              onClick={onStory}
-              disabled={!animalId || !colorId || !activityId || !adjectiveId}
-            >
-              Tell Me a Story
-            </button>
+          <div className="mb-12 flex h-12 justify-center">
+            {!storyLoading &&
+              animalId &&
+              colorId &&
+              activityId &&
+              adjectiveId && (
+                <button
+                  type="button"
+                  className="h-14 rounded-md bg-sky-600 px-2.5 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                  onClick={onStory}
+                  disabled={
+                    !animalId || !colorId || !activityId || !adjectiveId
+                  }
+                >
+                  Tell Me The Story
+                </button>
+              )}
           </div>
           <div className="rounded-md bg-sky-100 p-4">
             <h1 className="mb-4 py-2 text-2xl">{title}</h1>

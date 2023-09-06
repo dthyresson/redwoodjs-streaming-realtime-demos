@@ -65,7 +65,11 @@ const MarkdownFormatter = ({ content }) => {
     } else {
       // Regular text
       formattedElements.push(
-        React.createElement('p', { key: index, className: 'leading-10' }, line)
+        React.createElement(
+          'p',
+          { key: index, className: 'leading-10 text-lg' },
+          line
+        )
       )
     }
   })

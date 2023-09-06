@@ -241,8 +241,8 @@ const BedtimeStoryPage = () => {
               Tell Me a Story
             </button>
           </div>
-          <div className="grid grid-rows-2 gap-4">
-            <h1 className="py-4 text-2xl">{title}</h1>
+          <div className="rounded-md bg-sky-100 p-4">
+            <h1 className="mb-4 py-2 text-2xl">{title}</h1>
             <MarkdownFormatter content={body} />
           </div>
         </div>

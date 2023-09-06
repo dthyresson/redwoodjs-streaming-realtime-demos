@@ -1,11 +1,12 @@
+import { Redis } from 'ioredis'
+
 import { RedwoodRealtimeOptions } from '@redwoodjs/realtime'
 
 import subscriptions from 'src/subscriptions/**/*.{js,ts}'
 
 // if using a Redis store
-// import { Redis } from 'ioredis'
-// const publishClient = new Redis()
-// const subscribeClient = new Redis()
+const publishClient = new Redis(process.env.REDIS_URL)
+const subscribeClient = new Redis(process.env.REDIS_URL)
 
 /**
  * Configure RedwoodJS Realtime
@@ -30,13 +31,13 @@ import subscriptions from 'src/subscriptions/**/*.{js,ts}'
 export const realtime: RedwoodRealtimeOptions = {
   subscriptions: {
     subscriptions,
-    store: 'in-memory',
+    // store: 'in-memory',
     // if using a Redis store
-    // store: { redis: { publishClient, subscribeClient } },
+    store: { redis: { publishClient, subscribeClient } },
   },
   liveQueries: {
-    store: 'in-memory',
+    // store: 'in-memory',
     // if using a Redis store
-    // store: { redis: { publishClient, subscribeClient } },
+    store: { redis: { publishClient, subscribeClient } },
   },
 }

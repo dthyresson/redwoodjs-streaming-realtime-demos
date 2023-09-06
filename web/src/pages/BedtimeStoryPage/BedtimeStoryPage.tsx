@@ -157,7 +157,12 @@ const BedtimeStoryPage = () => {
           </HistoryContext.Consumer>
         </pre>
       </Drawer>
-      <a href="http://github.com" className="absolute right-0 top-0 z-grid">
+      <a
+        href="https://github.com/redwoodjs/redwoodjs-streaming-realtime-demos#bedtime-story-subscription-with-openai-streaming"
+        target="_blank"
+        rel="noreferrer"
+        className="absolute right-0 top-0 z-grid"
+      >
         <GitHubCorner />
       </a>
       <div className="mb-24 grid grid-cols-2 gap-4 p-4 ">

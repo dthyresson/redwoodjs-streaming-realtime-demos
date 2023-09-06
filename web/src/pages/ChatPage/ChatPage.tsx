@@ -57,7 +57,9 @@ const ChatPage = () => {
         </Drawer>
 
         <a
-          href="http://github.com"
+          href="https://github.com/redwoodjs/redwoodjs-streaming-realtime-demos#bedtime-story-subscription-with-openai-streaming"
+          target="_blank"
+          rel="noreferrer"
           className="absolute right-0 top-0 text-[#7E7CD4] hover:text-[#D573D4]"
         >
           <GitHubCorner />

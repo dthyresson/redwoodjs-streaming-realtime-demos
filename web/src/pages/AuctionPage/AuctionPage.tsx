@@ -176,7 +176,12 @@ const AuctionPage = ({ id }) => {
         </nav>
       </div>
 
-      <a href="http://github.com" className="absolute right-0 top-0 z-grid">
+      <a
+        href="https://github.com/redwoodjs/redwoodjs-streaming-realtime-demos#auction-bids-live-query"
+        target="_blank"
+        rel="noreferrer"
+        className="absolute right-0 top-0 z-grid"
+      >
         <GitHubCorner />
       </a>
     </div>

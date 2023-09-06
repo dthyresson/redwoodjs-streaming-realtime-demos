@@ -10,7 +10,7 @@ const MovieCard = ({ movie }: { movie: Movie }) => {
           src={`https://www.themoviedb.org/t/p/w300_and_h450_bestv2${movie.photo}`}
         />
       </div>
-      <div className="text-md flex items-end text-center text-sm">
+      <div className="text-md flex items-start rounded-md bg-gray-100 p-2 text-center text-sm">
         {movie.title}
       </div>
     </>

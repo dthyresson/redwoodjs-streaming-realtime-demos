@@ -37,9 +37,9 @@ const HomePage = () => {
               <Link to={option.slug}>
                 <div className="text-center">
                   <div className="text-lg font-semibold text-white">
-                    {option.name}
+                    {option.subtitle}
                   </div>
-                  <div className="text-md text-gray-100">{option.subtitle}</div>
+                  <div className="text-md text-gray-100">{option.name}</div>
                 </div>
               </Link>
             </div>

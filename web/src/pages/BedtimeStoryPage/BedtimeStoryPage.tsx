@@ -230,22 +230,20 @@ const BedtimeStoryPage = () => {
             </div>
           </div>
         )}
-        <div className="h-full rounded-md bg-sky-200 p-2">
-          <div className="grid grid-cols-2 ">
-            <div className="">
-              <h1 className="py-4 text-2xl">{title}</h1>
-              <MarkdownFormatter content={body} />
-            </div>
-            <div>
-              <button
-                type="button"
-                className="rounded-md bg-sky-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
-                onClick={onStory}
-                disabled={!animalId || !colorId || !activityId || !adjectiveId}
-              >
-                Tell Me a Story
-              </button>
-            </div>
+        <div className="h-full rounded-md bg-sky-200 p-12">
+          <div className="mb-12 flex justify-center">
+            <button
+              type="button"
+              className="h-14 rounded-md bg-sky-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+              onClick={onStory}
+              disabled={!animalId || !colorId || !activityId || !adjectiveId}
+            >
+              Tell Me a Story
+            </button>
+          </div>
+          <div className="grid grid-rows-2 gap-4">
+            <h1 className="py-4 text-2xl">{title}</h1>
+            <MarkdownFormatter content={body} />
           </div>
         </div>
       </div>

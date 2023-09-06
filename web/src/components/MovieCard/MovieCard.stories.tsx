@@ -22,4 +22,12 @@ export default meta
 
 type Story = StoryObj<typeof MovieCard>
 
-export const Primary: Story = {}
+export const Primary: Story = {
+  args: {
+    movie: {
+      id: '11-star-wars',
+      title: 'Star Wars',
+      photo: '/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg',
+    },
+  },
+}

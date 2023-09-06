@@ -22,4 +22,9 @@ export default meta
 
 type Story = StoryObj<typeof Avatar>
 
-export const Primary: Story = {}
+export const Primary: Story = {
+  args: {
+    name: 'John Doe',
+    color: 'orchid',
+  },
+}

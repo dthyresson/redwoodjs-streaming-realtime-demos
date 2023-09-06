@@ -165,11 +165,13 @@ const BedtimeStoryPage = () => {
       >
         <GitHubCorner />
       </a>
-      <div className="mb-24 grid grid-cols-2 gap-4 p-4 ">
+      <h1 className="px-24 py-8 text-[40px] font-bold leading-none text-white">
+        Tell me a story about the ...
+      </h1>
+      <div className="mb-24 grid grid-cols-2 gap-4 p-4">
         {loading && <div>Loading...</div>}
         {storyConfig && (
           <div className="ml-20 grid grid-flow-row auto-rows-max gap-4 overflow-scroll rounded-md">
-            <h2>Tell me a story about the ...</h2>
             <div className="grid grid-cols-4 gap-4 overflow-scroll bg-gray-50 p-4">
               {storyConfig.adjectives.map((adjective) => (
                 <p

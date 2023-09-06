@@ -186,9 +186,10 @@ const BedtimeStoryPage = () => {
             <div className="grid grid-cols-4 gap-4 bg-emerald-50 p-4">
               {storyConfig.adjectives.map((adjective) => (
                 <p
-                  className={`flex cursor-pointer justify-center rounded-md border-2 bg-white p-2 text-center hover:bg-emerald-600 hover:text-white ${
-                    adjectiveId === adjective.id &&
-                    'bg-emerald-500 text-white hover:bg-emerald-600'
+                  className={`flex cursor-pointer justify-center rounded-md border-2 p-2 text-center hover:bg-emerald-600 hover:text-white ${
+                    adjectiveId === adjective.id
+                      ? 'bg-emerald-600 text-white hover:bg-emerald-600'
+                      : 'bg-white'
                   }`}
                   key={`adjective-id-${adjective.id}`}
                   onClick={() => handleAdjectiveClick(adjective.id)}
@@ -200,9 +201,10 @@ const BedtimeStoryPage = () => {
             <div className="grid grid-cols-4 gap-4 bg-blue-50 p-4">
               {storyConfig.colors.map((color) => (
                 <p
-                  className={`flex cursor-pointer justify-center rounded-md border-2 bg-white p-2 text-center hover:bg-blue-600 hover:text-white ${
-                    colorId === color.id &&
-                    'bg-blue-500 text-white hover:bg-blue-600'
+                  className={`flex cursor-pointer justify-center rounded-md border-2 p-2 text-center hover:bg-blue-600 hover:text-white ${
+                    colorId === color.id
+                      ? 'bg-blue-600 text-white hover:bg-blue-600'
+                      : 'bg-white'
                   }`}
                   key={`color-id-${color.id}`}
                   onClick={() => handleColorClick(color.id)}
@@ -214,9 +216,10 @@ const BedtimeStoryPage = () => {
             <div className="grid grid-cols-4 gap-4 bg-violet-100 p-4">
               {storyConfig.animals.map((animal) => (
                 <p
-                  className={`flex cursor-pointer justify-center rounded-md border-2 bg-white p-2 text-center hover:bg-violet-600 hover:text-white ${
-                    animalId === animal.id &&
-                    'bg-violet-500 text-white hover:bg-violet-600'
+                  className={`flex cursor-pointer justify-center rounded-md border-2 p-2 text-center hover:bg-violet-600 hover:text-white ${
+                    animalId === animal.id
+                      ? 'bg-violet-600 text-white hover:bg-violet-600'
+                      : 'bg-white'
                   }`}
                   key={`animal-id-${animal.id}`}
                   onClick={() => handleAnimalClick(animal.id)}
@@ -228,9 +231,10 @@ const BedtimeStoryPage = () => {
             <div className="grid grid-cols-4 gap-4 bg-pink-100 p-4">
               {storyConfig.activities.map((activity) => (
                 <p
-                  className={`flex cursor-pointer justify-center rounded-md border-2 bg-white p-2 text-center hover:bg-pink-600 hover:text-white ${
-                    activityId === activity.id &&
-                    'bg-pink-500 text-white hover:bg-pink-600'
+                  className={`flex cursor-pointer justify-center rounded-md border-2 p-2 text-center hover:bg-pink-600 hover:text-white ${
+                    activityId === activity.id
+                      ? 'bg-pink-600 text-white hover:bg-pink-600'
+                      : 'bg-white'
                   }`}
                   key={`activity-id-${activity.id}`}
                   onClick={() => handleActivityClick(activity.id)}

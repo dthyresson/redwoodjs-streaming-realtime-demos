@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for rw-realtime-demo on 2023-09-06T09:34:06+01:00
+# fly.toml app configuration file generated for realtime-demo on 2023-09-06T16:25:24+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "rw-realtime-demo"
-primary_region = "lhr"
+app = "realtime-demo"
+primary_region = "iad"
 
 [build]
 
@@ -12,14 +12,9 @@ primary_region = "lhr"
   release_command = ".fly/release.sh"
 
 [env]
-  # DATABASE_URL = "file://data/sqlite.db"
   MIGRATE_ON_BOOT = "true"
   PORT = "8910"
   REDWOOD_DISABLE_TELEMETRY = "1"
-
-# [[mounts]]
-#   source = "data"
-#   destination = "/data"
 
 [http_service]
   internal_port = 8910

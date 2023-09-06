@@ -93,7 +93,7 @@ async function serve() {
   })
 
   // Start
-  fastify.listen({ port })
+  fastify.listen({ port, host: '0.0.0.0' })
 
   fastify.ready(() => {
     console.log(chalk.italic.dim('Took ' + (Date.now() - tsServer) + ' ms'))

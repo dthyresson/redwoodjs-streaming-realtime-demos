@@ -8994,6 +8994,7 @@ __metadata:
     "@redwoodjs/project-config": 7.0.0-canary.227
     "@redwoodjs/realtime": 7.0.0-canary.227
     chalk: 4.1.2
+    dotenv-defaults: 5.0.2
     fastify: ^4.21.0
     ioredis: ^5
     openai: ^4.0.1

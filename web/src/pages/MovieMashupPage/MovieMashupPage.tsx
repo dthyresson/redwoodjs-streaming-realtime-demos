@@ -120,7 +120,7 @@ const MovieMashupPage = () => {
         </pre>
       </Drawer>
       <a
-        href="https://github.com/redwoodjs/redwoodjs-streaming-realtime-demos#bedtime-story-subscription-with-openai-streaming"
+        href="https://github.com/redwoodjs/redwoodjs-streaming-realtime-demos#movie-mashup-live-query-with-openai-streaming"
         target="_blank"
         rel="noreferrer"
         className="absolute right-0 top-0 z-grid"

@@ -186,8 +186,8 @@ This project is already setup for Realtime.
 
 To setup a new project:
 
-* `yarn rw exp setup server-file`
-* `yarn rw exp setup realtime`
+* `yarn rw exp setup-server-file`
+* `yarn rw exp setup-realtime`
 
 You will get:
 

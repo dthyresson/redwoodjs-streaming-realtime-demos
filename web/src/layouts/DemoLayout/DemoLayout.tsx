@@ -1,4 +1,8 @@
+import React from 'react'
+
 import { Footer } from 'src/components/Footer'
+// import { History } from 'src/components/History/History'
+export const HistoryContext = React.createContext([])
 
 type DemoLayoutProps = {
   children?: React.ReactNode
@@ -6,10 +10,12 @@ type DemoLayoutProps = {
 
 const DemoLayout = ({ children }: DemoLayoutProps) => {
   return (
-    <div>
-      {children}
-      <Footer />
-    </div>
+    <HistoryContext.Provider value={[]}>
+      <div>
+        {children}
+        <Footer />
+      </div>
+    </HistoryContext.Provider>
   )
 }
 

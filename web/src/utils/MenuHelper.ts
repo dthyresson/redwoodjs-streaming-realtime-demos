@@ -1,18 +1,18 @@
 const MenuHelper = [
   {
-    title: 'Streaming Demo',
-    details: 'Countdown Timer',
-    slug: '/countdown',
-  },
-  {
-    title: 'Real Time',
-    details: 'Auction Demo',
-    slug: '/auction',
-  },
-  {
-    title: 'Real Time',
-    details: 'Chat Demo',
+    name: 'Subscription',
+    subtitle: 'Chat Demo',
     slug: '/chat',
+  },
+  {
+    name: 'Live Query',
+    subtitle: 'Auction Demo',
+    slug: '/auction/1',
+  },
+  {
+    name: 'Streaming',
+    subtitle: 'Countdown Timer',
+    slug: '/countdown',
   },
 ]
 

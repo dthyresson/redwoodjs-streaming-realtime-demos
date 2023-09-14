@@ -1,4 +1,12 @@
-import { useEffect, useRef } from 'react'
+import {
+  useEffect,
+  useState,
+  // useRef
+} from 'react'
+
+import { useSubscription } from '@redwoodjs/web'
+
+import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
 
 import ChatRoomMessage, {
   type chatMessage,
@@ -6,24 +14,41 @@ import ChatRoomMessage, {
 
 export type Color =
   | 'vividYellow'
-  | 'sandyBrown'
   | 'orchid'
   | 'cadetBlue'
   | 'coral'
-
+  | 'sandyBrown'
 interface ChatRoomProps {
   roomColor: Color
   chatRoomNumber: number
-  chatFeed: chatMessage[]
-  isRoomActive?: boolean
 }
 
-const ChatRoom = ({
-  isRoomActive = false,
-  chatRoomNumber,
-  chatFeed,
-  roomColor,
-}: ChatRoomProps) => {
+const NEW_MESSAGE_SUBSCRIPTION = gql`
+  subscription ListenForNewMessages($id: ID!) {
+    newMessage(roomId: $id) {
+      body
+      from
+    }
+  }
+`
+
+const ChatRoom = ({ chatRoomNumber, roomColor }: ChatRoomProps) => {
+  const [chatFeed, setChatFeed] = useState([])
+  const [isRoomActive, setIsRoomActive] = useState(false)
+
+  const history = React.useContext(HistoryContext)
+
+  useEffect(() => {
+    if (isRoomActive) {
+      const timeoutId = setTimeout(() => {
+        setIsRoomActive(false)
+      }, 500)
+
+      // Clear the timeout if the component unmounts or if isRoomActive changes to false before the timeout
+      return () => clearTimeout(timeoutId)
+    }
+  }, [isRoomActive])
+
   // scroll to the bottom
   useEffect(() => {
     const scrollAnchor = document.getElementById('scroll-anchor')
@@ -36,11 +61,32 @@ const ChatRoom = ({
     console.log(chatFeed.scrollHeight)
   }, [])
 
+  useSubscription(NEW_MESSAGE_SUBSCRIPTION, {
+    variables: { id: chatRoomNumber },
+    onData: ({ data }) => {
+      const message = data && data.data?.['newMessage']
+      if (message) {
+        const newMessage = {
+          id: chatFeed.length,
+          message: message.body,
+          user: {
+            name: message.from,
+            color: roomColor,
+          },
+        } as chatMessage
+
+        setChatFeed((prevChatFeed) => [...prevChatFeed, { ...newMessage }])
+        history.unshift(message)
+        setIsRoomActive(true)
+      }
+    },
+  })
+
   return (
     <div
       className={`flex h-full flex-col ${
         !isRoomActive ? 'bg-midnightBlue' : 'bg-darkSlateBlue'
-      } text-white`}
+      } transition-background-color text-white duration-500`}
     >
       <div className="flex w-full items-center gap-x-4 border-b-1 border-b-[#7F7CDA] p-5">
         <div

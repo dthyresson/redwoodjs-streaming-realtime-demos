@@ -12,19 +12,22 @@
 
 import type { Meta, StoryObj } from '@storybook/react'
 
-import Avatar from './Avatar'
+import MovieCard from './MovieCard'
 
-const meta: Meta<typeof Avatar> = {
-  component: Avatar,
+const meta: Meta<typeof MovieCard> = {
+  component: MovieCard,
 }
 
 export default meta
 
-type Story = StoryObj<typeof Avatar>
+type Story = StoryObj<typeof MovieCard>
 
 export const Primary: Story = {
   args: {
-    name: 'John Doe',
-    color: 'orchid',
+    movie: {
+      id: '11-star-wars',
+      title: 'Star Wars',
+      photo: '/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg',
+    },
   },
 }

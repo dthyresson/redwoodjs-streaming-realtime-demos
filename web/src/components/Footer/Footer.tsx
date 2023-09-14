@@ -6,21 +6,36 @@ import { useLocation } from '@redwoodjs/router'
 
 import Icon from '../Icon/Icon'
 
-const menuOptions = [
+export const menuOptions = [
   {
-    name: 'Real Time',
+    name: 'Realtime Demos',
+    subtitle: 'Pick a demo!',
+    slug: '/',
+  },
+  {
+    name: 'Subscription',
     subtitle: 'Chat Demo',
     slug: '/chat',
   },
   {
-    name: 'Real Time',
+    name: 'Live Query',
     subtitle: 'Auction Demo',
     slug: '/auction/1',
   },
   {
-    name: 'Streaming Demo',
+    name: 'Streaming',
     subtitle: 'Countdown Timer',
     slug: '/countdown',
+  },
+  {
+    name: 'Subscription',
+    subtitle: 'Bedtime Story AI Demo',
+    slug: '/bedtime-story',
+  },
+  {
+    name: 'Live Query',
+    subtitle: 'Movie Mashup AI Demo',
+    slug: '/movie-mashup',
   },
 ]
 
@@ -56,7 +71,7 @@ const Footer = () => {
   // set the current navigation item
   useEffect(() => {
     const curMenuOption = menuOptions.find((option) => {
-      return option.slug === pathname.replace('/', '')
+      return option.slug === pathname
     })
     if (!curMenuOption) return
     setCurMenuItem(menuOptions.indexOf(curMenuOption))
@@ -93,7 +108,7 @@ const Footer = () => {
           )}
         </AnimatePresence>
         <button
-          className="z-20 relative z-footerNavTrigger flex min-w-[320px] items-center justify-end gap-x-4 bg-black px-5 py-3"
+          className="z-90 relative z-footerNavTrigger flex min-w-[320px] items-center justify-end gap-x-4 bg-black px-5 py-3"
           onClick={toggleMenu}
         >
           <div className="text-right text-lg font-bold leading-tight text-caribbeanGreen hover:text-vividYellow">

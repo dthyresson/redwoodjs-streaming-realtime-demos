@@ -7,6 +7,7 @@ import { MetaTags } from '@redwoodjs/web'
 import { useQuery } from '@redwoodjs/web'
 import { useMutation, useSubscription } from '@redwoodjs/web'
 
+import Page from 'src/components/BedtimeStories/Page/Page'
 import Drawer from 'src/components/Drawer/Drawer'
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
 import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
@@ -69,6 +70,23 @@ const NEW_STORY_SUBSCRIPTION = gql`
 `
 
 const BedtimeStoryPage = () => {
+  const firstPage = 2
+  const totalPages = 6
+  const [currentPage, setCurrentPage] = useState(firstPage)
+
+  const flipToNextPage = () => {
+    if (currentPage === totalPages) return
+    // flip page
+
+    // update state
+    setCurrentPage((preValue) => preValue + 1)
+  }
+
+  const flipToPrevPage = () => {
+    if (currentPage === 1) return
+    setCurrentPage((preValue) => preValue - 1)
+  }
+
   const { data: storyConfig, loading } = useQuery(GET_STORY_CONFIG)
 
   const [storyLoading, setStoryLoading] = useState(false)
@@ -87,6 +105,7 @@ const BedtimeStoryPage = () => {
       setAnimalId(null) // Deselect if already selected
     } else {
       setAnimalId(id)
+      flipToNextPage()
     }
   }
 
@@ -97,6 +116,7 @@ const BedtimeStoryPage = () => {
       setColorId(null) // Deselect if already selected
     } else {
       setColorId(id)
+      flipToNextPage()
     }
   }
 
@@ -107,6 +127,7 @@ const BedtimeStoryPage = () => {
       setActivityId(null) // Deselect if already selected
     } else {
       setActivityId(id)
+      flipToNextPage()
     }
   }
 
@@ -117,6 +138,7 @@ const BedtimeStoryPage = () => {
       setAdjectiveId(null) // Deselect if already selected
     } else {
       setAdjectiveId(id)
+      flipToNextPage()
     }
   }
 
@@ -151,8 +173,8 @@ const BedtimeStoryPage = () => {
   }
 
   return (
-    <div className="h-full w-screen bg-[#a855f7]">
-      <MetaTags title="Bedtime Story" description="Tell me a story..." />
+    <div className="h-screen w-screen bg-[url('/images/bg.jpg')] bg-cover bg-center bg-no-repeat">
+      <MetaTags title="Bedtime Story" description="Bedtime Story page" />
 
       <Drawer>
         <pre>
@@ -176,98 +198,163 @@ const BedtimeStoryPage = () => {
       >
         <GitHubCorner />
       </a>
-      <h1 className="px-24 py-8 text-[40px] font-bold leading-none text-white">
-        Tell me a story about the ...
-      </h1>
-      <div className="mb-24 grid grid-cols-2 gap-4 p-4">
-        {loading && <div>Loading...</div>}
-        {storyConfig && (
-          <div className="grid-flow-rows grid-rows-max ml-20 grid gap-4 rounded-md">
-            <div className="grid grid-cols-4 gap-4 bg-emerald-50 p-4">
-              {storyConfig.adjectives.map((adjective) => (
-                <p
-                  className={`flex cursor-pointer justify-center rounded-md border-2 p-2 text-center hover:bg-emerald-600 hover:text-white ${
-                    adjectiveId === adjective.id
-                      ? 'bg-emerald-600 text-white hover:bg-emerald-600'
-                      : 'bg-white'
-                  }`}
-                  key={`adjective-id-${adjective.id}`}
-                  onClick={() => handleAdjectiveClick(adjective.id)}
+      <div className="center">
+        <div className="relative h-[870px] w-[1280px]">
+          <img
+            src="/images/book.png"
+            alt="Book"
+            className="h-[870px] w-[1280px] max-w-[1280px]"
+          />
+          <div className="book absolute left-[631px] top-[100px]">
+            {/* pages are listed last >> first to help with z-indexing and first load */}
+            {loading && <div>Loading...</div>}
+            {storyConfig && (
+              <>
+                <Page
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  pageNumber={6}
                 >
-                  {adjective.name}
-                </p>
-              ))}
-            </div>
-            <div className="grid grid-cols-4 gap-4 bg-blue-50 p-4">
-              {storyConfig.colors.map((color) => (
-                <p
-                  className={`flex cursor-pointer justify-center rounded-md border-2 p-2 text-center hover:bg-blue-600 hover:text-white ${
-                    colorId === color.id
-                      ? 'bg-blue-600 text-white hover:bg-blue-600'
-                      : 'bg-white'
-                  }`}
-                  key={`color-id-${color.id}`}
-                  onClick={() => handleColorClick(color.id)}
+                  <div className="story">
+                    <div className="h-[518px] overflow-y-scroll pr-4">
+                      {!storyLoading &&
+                        animalId &&
+                        colorId &&
+                        activityId &&
+                        adjectiveId && (
+                          <button
+                            type="button"
+                            className="h-14 rounded-md bg-sky-600 px-2.5 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                            onClick={onStory}
+                            disabled={
+                              !animalId ||
+                              !colorId ||
+                              !activityId ||
+                              !adjectiveId
+                            }
+                          >
+                            Tell Me The Story
+                          </button>
+                        )}
+                      <p className="px-2">{title}</p>
+                      <div className="px-2">
+                        <MarkdownFormatter content={body} />
+                      </div>
+                    </div>
+                  </div>
+                </Page>
+                <Page
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  pageNumber={5}
                 >
-                  {color.name}
-                </p>
-              ))}
-            </div>{' '}
-            <div className="grid grid-cols-4 gap-4 bg-violet-100 p-4">
-              {storyConfig.animals.map((animal) => (
-                <p
-                  className={`flex cursor-pointer justify-center rounded-md border-2 p-2 text-center hover:bg-violet-600 hover:text-white ${
-                    animalId === animal.id
-                      ? 'bg-violet-600 text-white hover:bg-violet-600'
-                      : 'bg-white'
-                  }`}
-                  key={`animal-id-${animal.id}`}
-                  onClick={() => handleAnimalClick(animal.id)}
+                  <div className="h-[600px] overflow-y-scroll p-4">
+                    <h2>Pick an activity</h2>
+                    <div className="story-choices">
+                      {storyConfig.activities.map((activity) => (
+                        <button
+                          key={`activity-id-${activity.id}`}
+                          className={
+                            activity.id === activityId ? 'selected' : ''
+                          }
+                          onClick={() => handleActivityClick(activity.id)}
+                        >
+                          {activity.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </Page>
+                <Page
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  pageNumber={4}
                 >
-                  {animal.name}
-                </p>
-              ))}
-            </div>
-            <div className="grid grid-cols-4 gap-4 bg-pink-100 p-4">
-              {storyConfig.activities.map((activity) => (
-                <p
-                  className={`flex cursor-pointer justify-center rounded-md border-2 p-2 text-center hover:bg-pink-600 hover:text-white ${
-                    activityId === activity.id
-                      ? 'bg-pink-600 text-white hover:bg-pink-600'
-                      : 'bg-white'
-                  }`}
-                  key={`activity-id-${activity.id}`}
-                  onClick={() => handleActivityClick(activity.id)}
+                  <div className="h-[600px] overflow-y-scroll p-4">
+                    <h2>Pick an animal</h2>
+                    <div className="story-choices">
+                      {storyConfig.animals.map((animal) => (
+                        <button
+                          key={`animal-id-${animal.id}`}
+                          className={animal.id === animalId ? 'selected' : ''}
+                          onClick={() => handleAnimalClick(animal.id)}
+                        >
+                          {animal.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </Page>
+                <Page
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  pageNumber={3}
                 >
-                  {activity.name}
-                </p>
-              ))}
-            </div>
+                  <div className="h-[600px] overflow-y-scroll p-4">
+                    <h2>Pick a color</h2>
+                    <div className="story-choices">
+                      {storyConfig.colors.map((color) => (
+                        <button
+                          key={`color-id-${color.id}`}
+                          className={color.id === colorId ? 'selected' : ''}
+                          onClick={() => handleColorClick(color.id)}
+                        >
+                          {color.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </Page>
+                <Page
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  pageNumber={2}
+                >
+                  <div className="h-[600px] overflow-y-scroll p-4">
+                    <h2>Pick an adjective</h2>
+                    <div className="story-choices">
+                      {storyConfig.adjectives.map((adjective) => (
+                        <button
+                          key={`adjective-id-${adjective.id}`}
+                          onClick={() => handleAdjectiveClick(adjective.id)}
+                          className={
+                            adjective.id === adjectiveId ? 'selected' : ''
+                          }
+                        >
+                          {adjective.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </Page>
+                <Page
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  pageNumber={1}
+                />
+              </>
+            )}
           </div>
-        )}
-        <div className="h-full rounded-md bg-sky-200 p-12">
-          <div className="mb-12 flex h-12 justify-center">
-            {!storyLoading &&
-              animalId &&
-              colorId &&
-              activityId &&
-              adjectiveId && (
-                <button
-                  type="button"
-                  className="h-14 rounded-md bg-sky-600 px-2.5 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
-                  onClick={onStory}
-                  disabled={
-                    !animalId || !colorId || !activityId || !adjectiveId
-                  }
-                >
-                  Tell Me The Story
-                </button>
-              )}
-          </div>
-          <div className="rounded-md bg-sky-100 p-4">
-            <h1 className="mb-4 py-2 text-2xl">{title}</h1>
-            <MarkdownFormatter content={body} />
-          </div>
+          {currentPage > firstPage && (
+            <button
+              onClick={flipToPrevPage}
+              className="pagination absolute bottom-[83px] left-[182px] z-[100] h-[86px] w-[82px] cursor-pointer pl-2 pt-6 mix-blend-multiply hover:bg-[url('/images/triangle--left.svg')]"
+            >
+              <img src="/images/arrow--left.svg" alt="Previous Page" />
+            </button>
+          )}
+          {currentPage < totalPages && (
+            <button
+              onClick={flipToNextPage}
+              className="pagination absolute bottom-[84px] right-[200px] z-[100] h-[86px] w-[82px] cursor-pointer pr-2 pt-6 mix-blend-multiply hover:bg-[url('/images/triangle--right.svg')]"
+            >
+              <img
+                src="/images/arrow--left.svg"
+                alt="Next Page"
+                className="float-right rotate-180"
+              />
+            </button>
+          )}
         </div>
       </div>
     </div>

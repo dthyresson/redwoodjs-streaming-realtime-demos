@@ -25,3 +25,7 @@
 
 [experimental.realtime]
 	enabled = true
+
+[generate]
+  tests = false
+  stories = false

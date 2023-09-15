@@ -48,6 +48,6 @@ EOF
 )
 
 # Make the curl request
-curl -X "POST" "http://localhost:8911/graphql" \
+curl -X "POST" "https://realtime.redwoodjs.com/.redwood/functions/graphql" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d "$query"

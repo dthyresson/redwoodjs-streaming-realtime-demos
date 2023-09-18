@@ -32,7 +32,7 @@ const MarkdownFormatter = ({ content }) => {
         formattedElements.push(
           React.createElement(
             `h${headingLevel}`,
-            { key: index, className: `text-${headingSize} my-4 font-black` },
+            { key: index, className: `text-${headingSize} my-1 font-black` },
             text
           )
         )

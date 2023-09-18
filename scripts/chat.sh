@@ -43,6 +43,6 @@ query="{\"query\":\"mutation Chat(\$input: SendMessageInput!) { sendMessage(inpu
 echo "Sending $from $body to room $roomId..."
 
 # Make the curl request
-curl -X "POST" "http://localhost:8911/graphql" \
+curl -X "POST" "https://realtime.redwoodjs.com/.redwood/functions/graphql" \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d "$query"

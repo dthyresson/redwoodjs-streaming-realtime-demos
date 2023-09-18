@@ -1,7 +1,11 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react'
+import React, {
+  useEffect,
+  // useEffect,
+  useState,
+} from 'react'
 
 import { MetaTags } from '@redwoodjs/web'
 import { useQuery } from '@redwoodjs/web'
@@ -87,9 +91,20 @@ const BedtimeStoryPage = () => {
     setCurrentPage((preValue) => preValue - 1)
   }
 
-  const { data: storyConfig, loading } = useQuery(GET_STORY_CONFIG)
+  const tellAgain = () => {
+    setCurrentPage(firstPage)
+    setAnimalId(null)
+    setColorId(null)
+    setActivityId(null)
+    setAdjectiveId(null)
+    setTitle(null)
+    setBody(null)
+  }
 
-  const [storyLoading, setStoryLoading] = useState(false)
+  const { data: storyConfig } = useQuery(GET_STORY_CONFIG)
+
+  // const [storyLoading, setStoryLoading] = useState(false)
+  const [writeStory, setWriteStory] = useState(false)
   const [animalId, setAnimalId] = useState(null)
   const [colorId, setColorId] = useState(null)
   const [activityId, setActivityId] = useState(null)
@@ -98,46 +113,131 @@ const BedtimeStoryPage = () => {
   const [body, setBody] = useState(null)
   const history = React.useContext(HistoryContext)
 
+  useEffect(() => {
+    console.log('BedtimeStoryPage -> writeStory', writeStory)
+    if (writeStory) {
+      setTitle("I'm writing your story...")
+      setBody(null)
+      create({
+        variables: {
+          input: {
+            animalId,
+            colorId,
+            activityId,
+            adjectiveId,
+          },
+        },
+      })
+      setWriteStory(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [writeStory, animalId, colorId, activityId, adjectiveId])
+
+  useEffect(() => {
+    console.log('BedtimeStoryPage -> writing story', true)
+    if (animalId && colorId && activityId && adjectiveId) {
+      setWriteStory(true)
+    }
+  }, [animalId, colorId, activityId, adjectiveId])
+
   const handleAnimalClick = (id) => {
-    setStoryLoading(false)
+    console.log('handleAnimalClick -> id', id, animalId)
 
     if (animalId === id) {
       setAnimalId(null) // Deselect if already selected
     } else {
       setAnimalId(id)
+      if (animalId && colorId && activityId && adjectiveId) {
+        setTitle("I'm writing your story...")
+        setBody(null)
+        create({
+          variables: {
+            input: {
+              animalId,
+              colorId,
+              activityId,
+              adjectiveId,
+            },
+          },
+        })
+      }
       flipToNextPage()
     }
   }
 
   const handleColorClick = (id) => {
-    setStoryLoading(false)
+    console.log('handleColorClick -> id', id, colorId)
 
     if (colorId === id) {
       setColorId(null) // Deselect if already selected
     } else {
       setColorId(id)
+      if (animalId && colorId && activityId && adjectiveId) {
+        setTitle("I'm writing your story...")
+        setBody(null)
+        create({
+          variables: {
+            input: {
+              animalId,
+              colorId,
+              activityId,
+              adjectiveId,
+            },
+          },
+        })
+      }
       flipToNextPage()
     }
   }
 
   const handleActivityClick = (id) => {
-    setStoryLoading(false)
+    console.log('handleActivityClick -> id', id, activityId)
 
     if (activityId === id) {
       setActivityId(null) // Deselect if already selected
     } else {
       setActivityId(id)
+      if (animalId && colorId && activityId && adjectiveId) {
+        setTitle("I'm writing your story...")
+        setBody(null)
+        create({
+          variables: {
+            input: {
+              animalId,
+              colorId,
+              activityId,
+              adjectiveId,
+            },
+          },
+        })
+      }
       flipToNextPage()
     }
   }
 
   const handleAdjectiveClick = (id) => {
-    setStoryLoading(false)
+    console.log('handleAdjectiveClick -> id', id, adjectiveId)
 
     if (adjectiveId === id) {
       setAdjectiveId(null) // Deselect if already selected
     } else {
+      console.log('handleAdjectiveClick -> id', id, adjectiveId)
       setAdjectiveId(id)
+
+      if (animalId && colorId && activityId && adjectiveId) {
+        setTitle("I'm writing your story...")
+        setBody(null)
+        create({
+          variables: {
+            input: {
+              animalId,
+              colorId,
+              activityId,
+              adjectiveId,
+            },
+          },
+        })
+      }
       flipToNextPage()
     }
   }
@@ -156,25 +256,9 @@ const BedtimeStoryPage = () => {
 
   const [create] = useMutation(TELL_STORY_MUTATION)
 
-  const onStory = (_data) => {
-    setStoryLoading(true)
-    setTitle("I'm writing your story...")
-    setBody(null)
-    create({
-      variables: {
-        input: {
-          animalId,
-          colorId,
-          activityId,
-          adjectiveId,
-        },
-      },
-    })
-  }
-
   return (
     <div className="h-screen w-screen bg-[url('/images/bg.jpg')] bg-cover bg-center bg-no-repeat">
-      <MetaTags title="Bedtime Story" description="Bedtime Story page" />
+      <MetaTags title="Bedtime Story" description="Bedtime Story" />
 
       <Drawer>
         <pre>
@@ -194,7 +278,7 @@ const BedtimeStoryPage = () => {
         href="https://github.com/redwoodjs/redwoodjs-streaming-realtime-demos#bedtime-story-subscription-with-openai-streaming"
         target="_blank"
         rel="noreferrer"
-        className="absolute right-0 top-0 z-grid"
+        className="absolute right-0 top-0 z-grid text-[#17484c]"
       >
         <GitHubCorner />
       </a>
@@ -207,39 +291,22 @@ const BedtimeStoryPage = () => {
           />
           <div className="book absolute left-[631px] top-[100px]">
             {/* pages are listed last >> first to help with z-indexing and first load */}
-            {loading && <div>Loading...</div>}
             {storyConfig && (
               <>
                 <Page
                   totalPages={totalPages}
                   currentPage={currentPage}
                   pageNumber={6}
+                  title={title}
+                  again={() => tellAgain()}
                 >
                   <div className="story">
                     <div className="h-[518px] overflow-y-scroll pr-4">
-                      {!storyLoading &&
-                        animalId &&
-                        colorId &&
-                        activityId &&
-                        adjectiveId && (
-                          <button
-                            type="button"
-                            className="h-14 rounded-md bg-sky-600 px-2.5 py-2.5 text-lg font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
-                            onClick={onStory}
-                            disabled={
-                              !animalId ||
-                              !colorId ||
-                              !activityId ||
-                              !adjectiveId
-                            }
-                          >
-                            Tell Me The Story
-                          </button>
-                        )}
-                      <p className="px-2">{title}</p>
-                      <div className="px-2">
-                        <MarkdownFormatter content={body} />
-                      </div>
+                      <>
+                        <div className="px-2">
+                          <MarkdownFormatter content={body} />
+                        </div>
+                      </>
                     </div>
                   </div>
                 </Page>
@@ -247,8 +314,10 @@ const BedtimeStoryPage = () => {
                   totalPages={totalPages}
                   currentPage={currentPage}
                   pageNumber={5}
+                  title={title}
+                  again={() => tellAgain()}
                 >
-                  <div className="h-[600px] overflow-y-scroll p-4">
+                  <div className="h-[654px] overflow-y-scroll p-4">
                     <h2>Pick an activity</h2>
                     <div className="story-choices">
                       {storyConfig.activities.map((activity) => (
@@ -269,6 +338,8 @@ const BedtimeStoryPage = () => {
                   totalPages={totalPages}
                   currentPage={currentPage}
                   pageNumber={4}
+                  title={title}
+                  again={() => tellAgain()}
                 >
                   <div className="h-[600px] overflow-y-scroll p-4">
                     <h2>Pick an animal</h2>
@@ -289,6 +360,8 @@ const BedtimeStoryPage = () => {
                   totalPages={totalPages}
                   currentPage={currentPage}
                   pageNumber={3}
+                  title={title}
+                  again={() => tellAgain()}
                 >
                   <div className="h-[600px] overflow-y-scroll p-4">
                     <h2>Pick a color</h2>
@@ -309,6 +382,8 @@ const BedtimeStoryPage = () => {
                   totalPages={totalPages}
                   currentPage={currentPage}
                   pageNumber={2}
+                  title={title}
+                  again={() => tellAgain()}
                 >
                   <div className="h-[600px] overflow-y-scroll p-4">
                     <h2>Pick an adjective</h2>
@@ -331,6 +406,8 @@ const BedtimeStoryPage = () => {
                   totalPages={totalPages}
                   currentPage={currentPage}
                   pageNumber={1}
+                  title={title}
+                  again={() => tellAgain()}
                 />
               </>
             )}

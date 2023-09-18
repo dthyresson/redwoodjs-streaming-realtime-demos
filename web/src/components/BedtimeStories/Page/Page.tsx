@@ -6,6 +6,8 @@ interface PageProps {
   pageNumber?: undefined | number
   side?: 'left' | 'right'
   totalPages: number
+  title: string | string
+  again: () => void
 }
 
 const Page = ({
@@ -14,6 +16,8 @@ const Page = ({
   pageNumber = undefined,
   side = 'right',
   totalPages,
+  title,
+  again,
 }: PageProps) => {
   const variants = {
     left: {
@@ -66,9 +70,23 @@ const Page = ({
           alt="ornaments"
           className="mb-2"
         />
-        <div className="mb-1 text-[50px] leading-none">tell me a</div>
-        <div className="mb-1 text-[100px] leading-none">Story</div>
-        <div className="mb-8 text-[50px] leading-none">about the...</div>
+        {currentPage === totalPages && (
+          <button onClick={() => again()}>
+            <div className="mb-1 text-[50px] leading-none">tell me another</div>
+            <div className="mb-1 text-[100px] leading-none">Story</div>
+            <div className="mb-1 text-[50px] leading-none">about the</div>
+            <div className="leading-12 mx-14 mb-8 mt-2 text-[50px]">
+              {title}
+            </div>
+          </button>
+        )}
+        {currentPage !== totalPages && (
+          <button onClick={() => again()}>
+            <div className="mb-1 text-[50px] leading-none">tell me a</div>
+            <div className="mb-1 text-[100px] leading-none">Story</div>
+            <div className="mb-8 text-[50px] leading-none">about the...</div>
+          </button>
+        )}
         <img
           src="/images/ornaments--top.svg"
           alt="ornaments"

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&Roboto+Mono:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bayon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
 
 /**
  * START --- SETUP TAILWINDCSS EDIT
@@ -35,6 +36,7 @@
     height: 1px;
   }
 
+  /* auction */
   .auction-grid {
     @apply mx-auto grid max-w-[1340px] w-full grid-cols-[1fr_auto_335px] z-grid;
   }
@@ -53,6 +55,87 @@
   .nav-dot--active {
     @apply text-[#7C7C7C] hover:text-caribbeanGreen
   }
+
+  /* bedtime stories */
+  .book h2 {
+    @apply mb-12 font-serif italic flex items-center gap-x-2 pl-6 pt-10;
+  }
+
+  .book h2:after {
+    content: '';
+    @apply h-[1px] flex-1 border-t-[1px] border-black;
+  }
+
+  .story {
+    background-size: 100% 100%;
+    @apply bg-[url('/images/page-frame.svg')] w-full h-full mix-blend-multiply pl-20 pr-16 py-20
+  }
+
+  .story p {
+    @apply font-serif leading-relaxed mb-6 rotate-[-1.5deg];
+  }
+
+  .story p:first-of-type::first-letter {
+    @apply font-blackLetter text-[#fff] text-[62px] leading-none bg-[#af2a17] float-left mr-2 p-2;
+  }
+
+  .story p:first-of-type::first-line {
+    @apply font-blackLetter text-xl;
+  }
+
+  .pagination img {
+    @apply hidden
+  }
+
+  .pagination:hover img {
+    @apply block;
+  }
+
+  .page {
+    transform-style: preserve-3d;
+    @apply border-[#cc9e6a] border-1
+  }
+
+  .page.page-left.shadow {
+    box-shadow: -40px 0px 40px 1px #bf8d62;
+  }
+
+  .front {
+    backface-visibility: hidden;
+    transform: rotateY(0deg);
+    transform-style: preserve-3d;
+    z-index: 2;
+    @apply bg-[url('/images/page--left.jpg')] absolute inset-0;
+  }
+
+  .back {
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    transform-style: preserve-3d;
+    z-index: 1;
+    @apply bg-[url('/images/page--right.jpg')] absolute inset-0;
+  }
+
+  .page-layout {
+    @apply px-0
+  }
+
+  .story-choices {
+    @apply font-serif text-lg gap-y-4 grid grid-cols-3;
+  }
+
+  .story-choices button {
+    background-position: 24px bottom;
+    @apply text-left px-6 py-5 hover:bg-[url('/images/pencil-underline.png')] bg-no-repeat pb-1;
+  }
+
+  .story-choices button.selected:hover,
+  .story-choices button.selected {
+    background-position: center 10px;
+    background-size: 100% 100%;
+    @apply bg-[url('/images/pencil-circle.png')] bg-no-repeat;
+  }
+
 }
 
 @layer utilities {

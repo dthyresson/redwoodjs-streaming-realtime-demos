@@ -69,7 +69,7 @@ export const tellStory = async (
     color,
     activity,
     adjective,
-    title: `The ${adjective.name} story about the ${color.name} ${animal.name} who ${activity.name}`,
+    title: `${adjective.name}, ${color.name} ${animal.name} who ${activity.name}`,
     body,
   }
 

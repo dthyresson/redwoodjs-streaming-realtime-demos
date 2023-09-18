@@ -447,3 +447,18 @@ The best way to learn Redwood is by going through the comprehensive [tutorial](h
 
 - Stay updated: read [Forum announcements](https://community.redwoodjs.com/c/announcements/5), follow us on [Twitter](https://twitter.com/redwoodjs), and subscribe to the [newsletter](https://redwoodjs.com/newsletter)
 - [Learn how to contribute](https://redwoodjs.com/docs/contributing)
+
+---
+
+# Fly Deploy
+
+Since RedwoodJS Realtime requires a serverful deploy, one great option is [Fly.io](https://fly.io).
+
+### Deploy to Fly
+
+There is a `fly` branch with the config and settings needed to deploy to Fly.
+
+* [Install flytcl](https://fly.io/docs/hands-on/install-flyctl/) from https://fly.io/docs/hands-on/install-flyctl/
+* Assumes you have a Fly app setup and all necessary envars configured
+* `git co fly`
+* `flyctl deploy`

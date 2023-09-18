@@ -42,66 +42,71 @@ export const mashupMovies = async (
   { input }: { input: MovieMashupInput },
   { context }: { context: { liveQueryStore: LiveQueryStorageMechanism } }
 ): Promise<MovieMashup> => {
-  const { id, firstMovie, secondMovie } = getMovies(input)
+  try {
+    const { id, firstMovie, secondMovie } = getMovies(input)
 
-  if (!firstMovie || !secondMovie) {
-    throw new Error('Missing movie')
-  }
+    if (!firstMovie || !secondMovie) {
+      throw new Error('Missing movie')
+    }
 
-  const stream = await openai.chat.completions.create({
-    model: 'gpt-3.5-turbo-0613',
-    messages: [
-      {
-        role: 'system',
-        content: PROMPT,
-      },
-      {
-        role: 'user',
-        content: `Movie 1: ${firstMovie.title}\nMovie 2: ${secondMovie.title}`,
-      },
-    ],
-    temperature: 1,
-    max_tokens: 256,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-    stream: true,
-  })
+    const stream = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo-0613',
+      messages: [
+        {
+          role: 'system',
+          content: PROMPT,
+        },
+        {
+          role: 'user',
+          content: `Movie 1: ${firstMovie.title}\nMovie 2: ${secondMovie.title}`,
+        },
+      ],
+      temperature: 1,
+      max_tokens: 256,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+      stream: true,
+    })
 
-  const streamingMashup = movieMashups.get(id)
+    const streamingMashup = movieMashups.get(id)
 
-  let body = ''
+    let body = ''
 
-  if (!streamingMashup) {
-    movieMashups.set(id, {
+    if (!streamingMashup) {
+      movieMashups.set(id, {
+        id,
+        firstMovie,
+        secondMovie,
+        mashup: { body },
+      })
+    }
+
+    logger.debug('OpenAI stream received started ...')
+
+    for await (const part of stream) {
+      const { content } = part.choices[0].delta
+      logger.debug({ content }, 'OpenAI stream received ...')
+      body += content ?? ''
+      movieMashups.get(id).mashup.body = body
+      logger.debug(
+        { id, mashup: movieMashups.get(id) },
+        'Invalidating movie mashup key'
+      )
+      logger.debug('OpenAI stream received ended.')
+
+      context.liveQueryStore.invalidate(`MovieMashup:${id}`)
+    }
+
+    return {
       id,
       firstMovie,
       secondMovie,
       mashup: { body },
-    })
-  }
-
-  logger.debug('OpenAI stream received started ...')
-
-  for await (const part of stream) {
-    const { content } = part.choices[0].delta
-    logger.debug({ content }, 'OpenAI stream received ...')
-    body += content ?? ''
-    movieMashups.get(id).mashup.body = body
-    logger.debug(
-      { id, mashup: movieMashups.get(id) },
-      'Invalidating movie mashup key'
-    )
-    logger.debug('OpenAI stream received ended.')
-
-    context.liveQueryStore.invalidate(`MovieMashup:${id}`)
-  }
-
-  return {
-    id,
-    firstMovie,
-    secondMovie,
-    mashup: { body },
+    }
+  } catch (error) {
+    logger.error({ error }, 'Failed to mashup movies')
+    throw new SyntaxError(`Failed to mashup movies: ${error.message}`)
   }
 }
 

@@ -147,20 +147,6 @@ const BedtimeStoryPage = () => {
       setAnimalId(null) // Deselect if already selected
     } else {
       setAnimalId(id)
-      if (animalId && colorId && activityId && adjectiveId) {
-        setTitle("I'm writing your story...")
-        setBody(null)
-        create({
-          variables: {
-            input: {
-              animalId,
-              colorId,
-              activityId,
-              adjectiveId,
-            },
-          },
-        })
-      }
       flipToNextPage()
     }
   }
@@ -172,20 +158,6 @@ const BedtimeStoryPage = () => {
       setColorId(null) // Deselect if already selected
     } else {
       setColorId(id)
-      if (animalId && colorId && activityId && adjectiveId) {
-        setTitle("I'm writing your story...")
-        setBody(null)
-        create({
-          variables: {
-            input: {
-              animalId,
-              colorId,
-              activityId,
-              adjectiveId,
-            },
-          },
-        })
-      }
       flipToNextPage()
     }
   }
@@ -197,20 +169,6 @@ const BedtimeStoryPage = () => {
       setActivityId(null) // Deselect if already selected
     } else {
       setActivityId(id)
-      if (animalId && colorId && activityId && adjectiveId) {
-        setTitle("I'm writing your story...")
-        setBody(null)
-        create({
-          variables: {
-            input: {
-              animalId,
-              colorId,
-              activityId,
-              adjectiveId,
-            },
-          },
-        })
-      }
       flipToNextPage()
     }
   }
@@ -223,27 +181,16 @@ const BedtimeStoryPage = () => {
     } else {
       console.log('handleAdjectiveClick -> id', id, adjectiveId)
       setAdjectiveId(id)
-
-      if (animalId && colorId && activityId && adjectiveId) {
-        setTitle("I'm writing your story...")
-        setBody(null)
-        create({
-          variables: {
-            input: {
-              animalId,
-              colorId,
-              activityId,
-              adjectiveId,
-            },
-          },
-        })
-      }
       flipToNextPage()
     }
   }
 
   useSubscription(NEW_STORY_SUBSCRIPTION, {
     variables: { input: { animalId, colorId, activityId, adjectiveId } },
+    onError(error) {
+      console.log('error', error)
+      setTitle(error)
+    },
     onData: ({ data }) => {
       const story = data && data.data?.['newStory']
       if (story) {

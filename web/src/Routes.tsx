@@ -6,12 +6,13 @@ import BedtimeStoryPage from './pages/BedtimeStoryPage/BedtimeStoryPage'
 import ChatPage from './pages/ChatPage/ChatPage'
 import CountdownPage from './pages/CountdownPage/CountdownPage'
 import MovieMashupPage from './pages/MovieMashupPage/MovieMashupPage'
+import TableOfContentsPage from './pages/TableOfContentsPage/TableOfContentsPage'
 
 const Routes = () => {
   return (
     <Router>
       <Set wrap={DemoLayout}>
-        <Route path="/" page={HomePage} name="home" />
+        <Route path="/" page={TableOfContentsPage} name="home" />
         <Route path="/auction/{id}" page={AuctionPage} name="auction" />
         <Route path="/bedtime-story" page={BedtimeStoryPage} name="bedtimeStory" />
         <Route path="/chat" page={ChatPage} name="chat" />

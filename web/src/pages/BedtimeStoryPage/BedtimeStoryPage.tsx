@@ -187,10 +187,6 @@ const BedtimeStoryPage = () => {
 
   useSubscription(NEW_STORY_SUBSCRIPTION, {
     variables: { input: { animalId, colorId, activityId, adjectiveId } },
-    onError(error) {
-      console.log('error', error)
-      setTitle(error)
-    },
     onData: ({ data }) => {
       const story = data && data.data?.['newStory']
       if (story) {

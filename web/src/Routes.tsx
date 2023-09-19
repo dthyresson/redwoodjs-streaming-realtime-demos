@@ -11,8 +11,8 @@ import TableOfContentsPage from './pages/TableOfContentsPage/TableOfContentsPage
 const Routes = () => {
   return (
     <Router>
+      <Route path="/" page={TableOfContentsPage} name="home" />
       <Set wrap={DemoLayout}>
-        <Route path="/" page={TableOfContentsPage} name="home" />
         <Route path="/auction/{id}" page={AuctionPage} name="auction" />
         <Route path="/bedtime-story" page={BedtimeStoryPage} name="bedtimeStory" />
         <Route path="/chat" page={ChatPage} name="chat" />

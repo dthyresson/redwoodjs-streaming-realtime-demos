@@ -7,6 +7,7 @@ import Drawer from 'src/components/Drawer/Drawer'
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
 import Icon from 'src/components/Icon/Icon'
 import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
+import { Constants } from 'src/utils/Constants'
 
 const SEND_MESSAGE = gql`
   mutation CreateContactMutation($input: SendMessageInput!) {
@@ -57,7 +58,7 @@ const ChatPage = () => {
         </Drawer>
 
         <a
-          href="https://github.com/redwoodjs/redwoodjs-streaming-realtime-demos#bedtime-story-subscription-with-openai-streaming"
+          href={Constants.CHAT_ANCHOR}
           target="_blank"
           rel="noreferrer"
           className="absolute right-0 top-0 text-[#7E7CD4] hover:text-[#D573D4]"

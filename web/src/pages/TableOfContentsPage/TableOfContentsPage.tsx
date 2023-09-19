@@ -1,7 +1,9 @@
-import { Link } from '@redwoodjs/router'
+import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
+import Icon from 'src/components/Icon/Icon'
+import { Constants } from 'src/utils/Constants'
 import { menuOptions } from 'src/utils/MenuOptions'
 
 const TableOfContentsPage = () => {
@@ -14,7 +16,7 @@ const TableOfContentsPage = () => {
 
       <div className="grid min-h-screen w-screen grid-cols-12 gap-x-5">
         <a
-          href="https://github.com/redwoodjs/redwoodjs-streaming-realtime-demos"
+          href={Constants.GITHUB_REPO}
           target="_blank"
           rel="noreferrer"
           className="absolute right-0 top-0 z-grid text-caribbeanGreen"
@@ -53,6 +55,21 @@ const TableOfContentsPage = () => {
               Later we’ll explore the pros and cons of each approach and how
               best to decide that to use and when.
             </p>
+            <div className="mb-10 aspect-video w-full">
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/ChjhR89nMyg?si=gZ7Vn4neWOaQAEU8&amp;start=331"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="h-full w-full"
+              ></iframe>
+              <p className="!text-sm text-gray-500">
+                Demoing RealTime at the Monthly Town Hall
+              </p>
+            </div>
             <h2 className="my-2 text-xl font-bold">Showcase Demos</h2>
             <p>
               This app showcases both subscriptions and live queries. It also
@@ -67,6 +84,15 @@ const TableOfContentsPage = () => {
               Each room subscribes to its new messages via the `NewMessage`
               channel aka topic.
             </p>
+            <img src="/images/screenshot__chat.png" alt="Chatroom Demo" />
+            <div className="action-buttons">
+              <Link className="button" to={routes.chat()}>
+                <Icon name="arrowUpRight" /> View Demo
+              </Link>
+              <a className="button" href={Constants.CHAT_ANCHOR}>
+                <Icon name="github" /> View Code
+              </a>
+            </div>
             <h3 className="my-2 text-lg font-semibold leading-10">
               Auction Bids (Live Query)
             </h3>
@@ -75,6 +101,16 @@ const TableOfContentsPage = () => {
               When a bid is made, the auction updates via a Live Query due to
               the invalidation of the auction key.
             </p>
+            <img src="/images/screenshot__auction.png" alt="Auction" />
+            <div className="action-buttons">
+              <Link className="button" to={routes.auction({ id: '1' })}>
+                <Icon name="arrowUpRight" /> View Demo
+              </Link>
+              <a className="button" href={Constants.AUCTION_ANCHOR}>
+                <Icon name="github" /> View Code
+              </a>
+            </div>
+
             <h3 className="my-2 text-lg font-semibold leading-10">
               Countdown (Streaming Subscription)
             </h3>
@@ -83,6 +119,19 @@ const TableOfContentsPage = () => {
               This example showcases how a subscription can yields its own
               response.
             </p>
+            <img
+              src="/images/screenshot__countdown.png"
+              alt="Countdown Timer"
+            />
+            <div className="action-buttons">
+              <Link className="button" to={routes.countdown()}>
+                <Icon name="arrowUpRight" /> View Demo
+              </Link>
+              <a className="button" href={Constants.COUNTDOWN_ANCHOR}>
+                <Icon name="github" /> View Code
+              </a>
+            </div>
+
             <h3 className="my-2 text-lg font-semibold leading-10">
               Bedtime Story (Subscription with OpenAI Streaming)
             </h3>
@@ -106,6 +155,16 @@ const TableOfContentsPage = () => {
               The story updates on each stream content delta via a `newStory`
               subscription topic event.
             </p>
+            <img src="/images/screenshot__bedtime.png" alt="Bedtime Story" />
+            <div className="action-buttons">
+              <Link className="button" to={routes.bedtimeStory()}>
+                <Icon name="arrowUpRight" /> View Demo
+              </Link>
+              <a href={Constants.BEDTIME_STORY_ANCHOR} className="button">
+                <Icon name="github" /> View Code
+              </a>
+            </div>
+
             <h3 className="my-2 text-lg font-semibold leading-10">
               Movie Mashup (Live Query with OpenAI Streaming)
             </h3>
@@ -123,6 +182,15 @@ const TableOfContentsPage = () => {
               each stream content delta via a Live Query by invalidating the
               `MovieMashup key.
             </p>
+            <img src="/images/screenshot__movies.png" alt="Movie Mashup" />
+            <div className="action-buttons">
+              <Link className="button" to={routes.movieMashup()}>
+                <Icon name="arrowUpRight" /> View Demo
+              </Link>
+              <a className="button" href={Constants.MOVIE_MASHUP_ANCHOR}>
+                <Icon name="github" /> View Code
+              </a>
+            </div>
           </div>
         </div>
         <div className="col-span-4 h-screen overflow-y-scroll bg-black pb-24 pt-[100px] text-center">

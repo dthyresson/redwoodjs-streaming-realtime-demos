@@ -156,6 +156,14 @@
     @apply whitespace-normal bg-gray-100 py-3 px-6 mb-6
   }
 
+  .toc__content .button {
+    @apply rounded-md border-2 border-black font-bold text-center center gap-x-2 w-full py-3 hover:bg-black hover:text-white block
+  }
+
+  .toc__content .action-buttons {
+    @apply flex gap-x-5 mb-10
+  }
+
 }
 
 @layer utilities {

@@ -4,40 +4,9 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 import { useLocation } from '@redwoodjs/router'
 
-import Icon from '../Icon/Icon'
+import { menuOptions } from 'src/utils/MenuOptions'
 
-export const menuOptions = [
-  {
-    name: 'Realtime Demos',
-    subtitle: 'Pick a demo!',
-    slug: '/',
-  },
-  {
-    name: 'Subscription',
-    subtitle: 'Chat Demo',
-    slug: '/chat',
-  },
-  {
-    name: 'Live Query',
-    subtitle: 'Auction Demo',
-    slug: '/auction/1',
-  },
-  {
-    name: 'Streaming',
-    subtitle: 'Countdown Timer',
-    slug: '/countdown',
-  },
-  {
-    name: 'Subscription',
-    subtitle: 'Bedtime Story AI Demo',
-    slug: '/bedtime-story',
-  },
-  {
-    name: 'Live Query',
-    subtitle: 'Movie Mashup AI Demo',
-    slug: '/movie-mashup',
-  },
-]
+import Icon from '../Icon/Icon'
 
 const DropdownMenu = ({ menuOptions, curOption }) => {
   return (

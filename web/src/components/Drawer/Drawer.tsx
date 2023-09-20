@@ -1,11 +1,15 @@
 import { motion } from 'framer-motion'
 
+import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
+
 interface DrawerProps {
   children: JSX.Element
   theme?: 'vividYellow' | 'caribbeanGreen'
 }
 
 const Drawer = ({ children, theme = 'caribbeanGreen' }: DrawerProps) => {
+  const { clearHistory } = React.useContext(HistoryContext)
+
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
 
   const slideInOut = () => {
@@ -27,6 +31,8 @@ const Drawer = ({ children, theme = 'caribbeanGreen' }: DrawerProps) => {
         >
           🤓
         </button>
+        <button onClick={clearHistory}>Clear</button>
+
         {children}
       </motion.div>
     </div>

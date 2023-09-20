@@ -55,7 +55,7 @@ const MovieMashupPage = () => {
   const [loading, setLoading] = useState(false)
   const [firstMovieId, setFirstMovieId] = useState(null)
   const [secondMovieId, setSecondMovieId] = useState(null)
-  const history = React.useContext(HistoryContext)
+  const { history } = React.useContext(HistoryContext)
 
   const handleMovieClick = (movieId) => {
     if (firstMovieId === movieId) {
@@ -85,6 +85,8 @@ const MovieMashupPage = () => {
     },
   })
 
+  movieMashupData && history.unshift(movieMashupData.movieMashup)
+
   const [create] = useMutation(MASHUP_MOVIE_MUTATION)
 
   const onMashup = (_data) => {
@@ -112,7 +114,7 @@ const MovieMashupPage = () => {
             {(value) => (
               <p
                 key={`movie-mashup-history-${value}`}
-                className="w-[400px] max-w-[400px] overflow-scroll"
+                className="w-[400px] max-w-[400px] overflow-scroll whitespace-pre-wrap"
               >
                 {JSON.stringify(value, null, 2)}
               </p>

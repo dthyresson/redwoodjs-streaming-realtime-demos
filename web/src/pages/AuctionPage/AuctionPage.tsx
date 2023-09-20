@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { NavLink, routes } from '@redwoodjs/router'
 import { MetaTags, useMutation, useQuery } from '@redwoodjs/web'
@@ -17,6 +17,28 @@ const BID_ON_AUCTION = gql`
     }
   }
 `
+
+const RESET_AUCTION = gql`
+  mutation ResetAuction($id: ID!) {
+    resetAuction(id: $id) {
+      bids {
+        amount
+      }
+      highestBid {
+        amount
+      }
+      id
+      title
+    }
+  }
+`
+
+// const RESET_AUCTIONS = gql`
+//   mutation ResetAuctions {
+//     resetAuctions
+//   }
+// `
+
 const AUCTION_LIVE_QUERY = gql`
   query GetCurrentAuctionBids($id: ID!) @live {
     auction(id: $id) {
@@ -37,15 +59,23 @@ const AuctionPage = ({ id }) => {
   const [bidAmount, setBidAmount] = useState(10)
 
   // Auction history
-  const history = React.useContext(HistoryContext)
+  const { clearHistory, history } = React.useContext(HistoryContext)
 
   // Get the current auction with a @live query directive to receive updates in real time when a new bid is placed
   const { data } = useQuery(AUCTION_LIVE_QUERY, {
     variables: { id },
     onCompleted(data) {
+      console.debug('onCompleted', data.auction)
       history.unshift(data.auction)
     },
   })
+
+  useEffect(() => {
+    console.debug('AuctionPage useEffect', data)
+    data && history.unshift(data.auction)
+  }, [data, history])
+
+  data && history.unshift(data.auction)
 
   // Mutation to bid on an auction
   const [create] = useMutation(BID_ON_AUCTION)
@@ -57,6 +87,20 @@ const AuctionPage = ({ id }) => {
     })
   }
 
+  // Mutation to reset an auction
+  const [resetAuction] = useMutation(RESET_AUCTION)
+
+  // When the reset button is clicked, call the mutation
+  const onResetAuction = (id) => {
+    resetAuction({
+      variables: { id },
+      onCompleted: (data) => {
+        console.debug('onMutationComplete', JSON.stringify(data))
+        clearHistory()
+      },
+    })
+  }
+
   return (
     <div className="bg-[#F1F2F4]">
       <MetaTags title="Auction" description="Auction page" />
@@ -65,7 +109,10 @@ const AuctionPage = ({ id }) => {
         <pre>
           <HistoryContext.Consumer>
             {(value) => (
-              <p key={`countdown-history-${value}`}>
+              <p
+                key={`countdown-history-${value}`}
+                className="w-[400px] max-w-[400px] overflow-scroll whitespace-pre-wrap"
+              >
                 {JSON.stringify(value, null, 2)}
               </p>
             )}
@@ -117,12 +164,16 @@ const AuctionPage = ({ id }) => {
             </button>
           </div>
           <div className="flex items-center justify-end gap-x-4 rounded-r-3xl bg-white pr-12">
-            <h4 className="whitespace-nowrap text-xs font-bold uppercase text-[#AEAEAE]">
-              Best Offer
-            </h4>
+            <button onClick={() => onResetAuction(data?.auction?.id)}>
+              <h4 className="whitespace-nowrap text-xs font-bold uppercase text-[#AEAEAE]">
+                Best Offer
+              </h4>
+            </button>
             <div>
               <span className="dollar-sign">$</span>
-              <span className="amount">{data?.auction?.highestBid.amount}</span>
+              <span className="amount">
+                {data?.auction?.highestBid?.amount}
+              </span>
             </div>
           </div>
         </div>

@@ -41,6 +41,17 @@ export const auction = async ({ id }) => {
   return foundAuction
 }
 
+export const resetAuctions = async () => {
+  auctions.forEach((a) => (a.bids = [{ amount: 0 }]))
+  return auctions
+}
+
+export const resetAuction = async ({ id }) => {
+  const index = auctions.findIndex((a) => a.id === id)
+  auctions[index].bids = [{ amount: 0 }]
+  return auctions[index]
+}
+
 export const bid = async (
   { input },
   { context }: { context: { liveQueryStore: LiveQueryStorageMechanism } }

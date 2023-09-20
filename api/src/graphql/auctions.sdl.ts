@@ -18,6 +18,8 @@ export const schema = gql`
 
   type Mutation {
     bid(input: BidInput!): Bid @requireAuth
+    resetAuctions: [Auction!]! @requireAuth
+    resetAuction(id: ID!): Auction @requireAuth
   }
 
   input BidInput {

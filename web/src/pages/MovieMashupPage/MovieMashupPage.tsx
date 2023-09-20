@@ -9,6 +9,7 @@ import Drawer from 'src/components/Drawer/Drawer'
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
 import MovieCard from 'src/components/MovieCard/MovieCard'
 import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
+import { Constants } from 'src/utils/Constants'
 import MarkdownFormatter from 'src/utils/MarkdownFormatter'
 
 const GET_MOVIES_QUERY = gql`
@@ -120,7 +121,7 @@ const MovieMashupPage = () => {
         </pre>
       </Drawer>
       <a
-        href="https://github.com/redwoodjs/redwoodjs-streaming-realtime-demos#movie-mashup-live-query-with-openai-streaming"
+        href={Constants.MOVIE_MASHUP_ANCHOR}
         target="_blank"
         rel="noreferrer"
         className="absolute right-0 top-0 z-grid"

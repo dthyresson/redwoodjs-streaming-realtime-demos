@@ -8,6 +8,7 @@ import Drawer from 'src/components/Drawer/Drawer'
 import GitHubCorner from 'src/components/GitHubCorner/GitHubCorner'
 import NavDot from 'src/components/NavDot/NavDot'
 import { HistoryContext } from 'src/layouts/DemoLayout/DemoLayout'
+import { Constants } from 'src/utils/Constants'
 
 const BID_ON_AUCTION = gql`
   mutation CreateBid($input: BidInput!) {
@@ -177,7 +178,7 @@ const AuctionPage = ({ id }) => {
       </div>
 
       <a
-        href="https://github.com/redwoodjs/redwoodjs-streaming-realtime-demos#auction-bids-live-query"
+        href={Constants.AUCTION_ANCHOR}
         target="_blank"
         rel="noreferrer"
         className="absolute right-0 top-0 z-grid"

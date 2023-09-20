@@ -136,6 +136,34 @@
     @apply bg-[url('/images/pencil-circle.png')] bg-no-repeat;
   }
 
+  .toc__content h1 {
+    @apply font-sans text-[42px] font-bold mb-2
+  }
+
+  .toc__content h2 {
+    @apply font-sans text-3xl font-bold mb-2;
+  }
+
+  .toc__content p {
+    @apply text-lg leading-7 mb-6
+  }
+
+  .toc__content p:has(+ h2) {
+    @apply text-lg leading-7 mb-10
+  }
+
+  .toc__content pre {
+    @apply whitespace-normal bg-gray-100 py-3 px-6 mb-6
+  }
+
+  .toc__content .button {
+    @apply rounded-md border-2 border-black font-bold text-center center gap-x-2 w-full py-3 hover:bg-black hover:text-white block
+  }
+
+  .toc__content .action-buttons {
+    @apply flex gap-x-5 mb-10
+  }
+
 }
 
 @layer utilities {

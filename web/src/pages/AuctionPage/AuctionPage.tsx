@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useEffect, useState } from 'react'
 
 import { NavLink, routes } from '@redwoodjs/router'
@@ -164,11 +167,9 @@ const AuctionPage = ({ id }) => {
             </button>
           </div>
           <div className="flex items-center justify-end gap-x-4 rounded-r-3xl bg-white pr-12">
-            <button onClick={() => onResetAuction(data?.auction?.id)}>
-              <h4 className="whitespace-nowrap text-xs font-bold uppercase text-[#AEAEAE]">
-                Best Offer
-              </h4>
-            </button>
+            <h4 className="whitespace-nowrap text-xs font-bold uppercase text-[#AEAEAE]">
+              Best Offer
+            </h4>
             <div>
               <span className="dollar-sign">$</span>
               <span className="amount">
@@ -223,6 +224,14 @@ const AuctionPage = ({ id }) => {
               >
                 <NavDot />
               </NavLink>
+            </li>
+            <li>
+              <a
+                className="cursor-grabbing text-orchid hover:text-gray-100"
+                onClick={() => onResetAuction(data?.auction?.id)}
+              >
+                <NavDot />
+              </a>
             </li>
           </ul>
         </nav>

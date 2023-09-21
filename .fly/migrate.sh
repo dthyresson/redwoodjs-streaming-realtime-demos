@@ -6,4 +6,4 @@ set -ex
 # yarn rw prisma migrate deploy
 
 # This alternative command uses less memory
-# npx prisma migrate deploy --schema /app/api/db/schema.prisma
+npx prisma migrate deploy --schema /app/api/db/schema.prisma

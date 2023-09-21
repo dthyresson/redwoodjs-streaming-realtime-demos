@@ -39,22 +39,24 @@ const TableOfContentsPage = () => {
             <p>
               The answer is: <strong>now</strong>.
             </p>
-            <h2>What is Realtime?</h2>
+            <h2>What is RedwoodJS Realtime?</h2>
             <p>
-              The real-time solution for RedwoodJS is initially for GraphQL.
+              RedwoodJS Realime is a real-time solution for for GraphQL over
+              Server-Sent Events.
             </p>
             <p>
-              In GraphQL, there are two options for real-time updates:{' '}
+              Redwood offers two options for real-time updates:{' '}
               <strong>live queries</strong> and <strong>subscriptions</strong>.
               Subscriptions are part of the GraphQL specification, whereas live
               queries are not.
             </p>
             <p>
               There are times where subscriptions are well-suited for a realtime
-              problem — and in some cases live queries may be a better fit.
-              Later we’ll explore the pros and cons of each approach and how
-              best to decide that to use and when.
+              problem — and in some cases live queries may be a better fit. You
+              can explore the showcases and view the demo code to see how each
+              works and decide what best suits your real-time needs.
             </p>
+
             <div className="mb-10 aspect-video w-full">
               <iframe
                 width="560"
@@ -180,8 +182,19 @@ const TableOfContentsPage = () => {
             <p>
               Powered by OpenAI, this movie tagline and treatment updates on
               each stream content delta via a Live Query by invalidating the
-              `MovieMashup key.
+              `MovieMashup` key.
             </p>
+            <pre>
+              const PROMPT = `Propose a short new movie treatment in the style
+              of a movie trailer advertisement voice over by mashing up the
+              plots, characters, their names, and themes of two existing movies.
+              Give the new movie a title and tagline that could be used on a
+              movie poster. The treatment should be no longer than 3 sentences.
+              Return the title, tagline, and treatment of the new movie as text
+              with labels: Title, Tagline, and Treatment and format as markdown
+              where the title is a heading, tagline is a subheading and
+              treatment uses bold for emphasis on some exciting words.`
+            </pre>
             <img src="/images/screenshot__movies.png" alt="Movie Mashup" />
             <div className="action-buttons">
               <Link className="button" to={routes.movieMashup()}>

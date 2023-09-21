@@ -112,11 +112,12 @@ const BedtimeStoryPage = () => {
   const [adjectiveId, setAdjectiveId] = useState(null)
   const [title, setTitle] = useState(null)
   const [body, setBody] = useState(null)
-  const history = React.useContext(HistoryContext)
+  const { history, clearHistory } = React.useContext(HistoryContext)
 
   useEffect(() => {
     console.log('BedtimeStoryPage -> writeStory', writeStory)
     if (writeStory) {
+      clearHistory()
       setTitle("I'm writing your story...")
       setBody(null)
       create({
@@ -210,7 +211,7 @@ const BedtimeStoryPage = () => {
             {(value) => (
               <p
                 key={`bedtime-story-history-${value}`}
-                className="w-[400px] max-w-[400px] overflow-scroll"
+                className="w-[400px] max-w-[400px] overflow-scroll whitespace-pre-wrap"
               >
                 {JSON.stringify(value, null, 2)}
               </p>

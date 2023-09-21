@@ -20,7 +20,7 @@ const CountdownPage = () => {
 
   const [countdown, setCountdown] = useState(from)
 
-  const history = React.useContext(HistoryContext)
+  const { history } = React.useContext(HistoryContext)
 
   useSubscription(COUNTDOWN_SUBSCRIPTION, {
     variables: { from, interval },
@@ -43,7 +43,10 @@ const CountdownPage = () => {
         <pre>
           <HistoryContext.Consumer>
             {(value) => (
-              <p key={`countdown-history-${value}`}>
+              <p
+                key={`countdown-history-${value}`}
+                className="w-[400px] max-w-[400px] overflow-scroll whitespace-pre-wrap"
+              >
                 {JSON.stringify(value, null, 2)}
               </p>
             )}

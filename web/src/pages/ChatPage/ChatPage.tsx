@@ -49,7 +49,10 @@ const ChatPage = () => {
           <pre>
             <HistoryContext.Consumer>
               {(value) => (
-                <p key={`chat-history-${value}`}>
+                <p
+                  key={`chat-history-${value}`}
+                  className="w-[400px] max-w-[400px] overflow-scroll whitespace-pre-wrap"
+                >
                   {JSON.stringify(value, null, 2)}
                 </p>
               )}

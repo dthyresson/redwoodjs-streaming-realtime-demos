@@ -109,18 +109,16 @@ const AuctionPage = ({ id }) => {
       <MetaTags title="Auction" description="Auction page" />
 
       <Drawer>
-        <pre>
-          <HistoryContext.Consumer>
-            {(value) => (
-              <p
-                key={`countdown-history-${value}`}
-                className="w-[400px] max-w-[400px] overflow-scroll whitespace-pre-wrap"
-              >
-                {JSON.stringify(value, null, 2)}
-              </p>
-            )}
-          </HistoryContext.Consumer>
-        </pre>
+        <HistoryContext.Consumer>
+          {(value) => (
+            <p
+              key={`countdown-history-${value}`}
+              className="w-[250px] max-w-[250px] overflow-scroll whitespace-pre-wrap"
+            >
+              {JSON.stringify(value, null, 2)}
+            </p>
+          )}
+        </HistoryContext.Consumer>
       </Drawer>
 
       <div className="flex max-h-screen min-h-screen flex-col justify-end pb-[80px]">

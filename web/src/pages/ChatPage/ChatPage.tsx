@@ -46,18 +46,16 @@ const ChatPage = () => {
 
       <div className="h-screen w-screen bg-[#313191]">
         <Drawer>
-          <pre>
-            <HistoryContext.Consumer>
-              {(value) => (
-                <p
-                  key={`chat-history-${value}`}
-                  className="w-[400px] max-w-[400px] overflow-scroll whitespace-pre-wrap"
-                >
-                  {JSON.stringify(value, null, 2)}
-                </p>
-              )}
-            </HistoryContext.Consumer>
-          </pre>
+          <HistoryContext.Consumer>
+            {(value) => (
+              <p
+                key={`chat-history-${value}`}
+                className="w-[250px] max-w-[250px] overflow-scroll whitespace-pre-wrap"
+              >
+                {JSON.stringify(value, null, 2)}
+              </p>
+            )}
+          </HistoryContext.Consumer>
         </Drawer>
 
         <a

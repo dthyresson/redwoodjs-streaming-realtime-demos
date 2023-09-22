@@ -27,20 +27,19 @@ const Drawer = ({ children, theme = 'caribbeanGreen' }: DrawerProps) => {
       >
         <>
           <button
-            className={`absolute -right-[50px] top-[100px] rounded-[20px] bg-${theme} py-5 pl-10 pr-4 text-3xl`}
+            className={`absolute -right-[60px] top-[100px] rounded-[20px] bg-${theme} py-5 pl-8 pr-4 text-3xl`}
             onClick={slideInOut}
           >
             🤓
           </button>
           <button
-            className={`absolute -right-[50px] top-[150px] rounded-[20px] bg-${theme} py-5 pl-10 pr-4 text-3xl`}
+            className={`absolute -right-[60px] top-[150px] rounded-[20px] bg-${theme} py-5 pl-8 pr-4 text-3xl`}
             onClick={clearHistory}
           >
             🧹
           </button>
         </>
-
-        {children}
+        <pre className="h-[calc(100vh-100px)] overflow-scroll">{children}</pre>
       </motion.div>
     </div>
   )

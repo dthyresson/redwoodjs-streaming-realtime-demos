@@ -22,5 +22,10 @@
   "prisma": {
     "seed": "yarn rw exec seed"
   },
+  "scripts": {
+    "deploy": "flyctl deploy --wait-timeout 120",
+    "deploy:clean": "flyctl deploy --no-cache --wait-timeout 120",
+    "deploy:status": "flyctl status"
+  },
   "packageManager": "yarn@3.6.1"
 }

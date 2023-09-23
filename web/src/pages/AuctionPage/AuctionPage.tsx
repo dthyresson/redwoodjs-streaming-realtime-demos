@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { NavLink, routes } from '@redwoodjs/router'
 import { MetaTags, useMutation, useQuery } from '@redwoodjs/web'
@@ -58,8 +58,8 @@ const AUCTION_LIVE_QUERY = gql`
 `
 
 const AuctionPage = ({ id }) => {
-  // when clicking Bid, this is the amount that will be bid
-  const [bidAmount, setBidAmount] = useState(10)
+  // Keep track of the bid amount being typed to send
+  const bidAmountRef = useRef(null)
 
   // Auction history
   const { clearHistory, history } = React.useContext(HistoryContext)
@@ -78,16 +78,33 @@ const AuctionPage = ({ id }) => {
     data && history.unshift(data.auction)
   }, [data, history])
 
-  data && history.unshift(data.auction)
+  if (data) {
+    history.unshift(data.auction)
+  }
 
   // Mutation to bid on an auction
-  const [create] = useMutation(BID_ON_AUCTION)
+  const [create] = useMutation(BID_ON_AUCTION, {
+    onCompleted: (data) => {
+      console.debug('onMutationComplete', JSON.stringify(data))
+    },
+  })
 
-  // When the Bid button is clicked, call the mutation
+  // Call the mutation to bid on an auction
   const onBid = (data) => {
-    create({
+    return create({
       variables: { input: data },
     })
+  }
+
+  // When the Bid button is clicked, call the mutation
+  const handleBidClick = () => {
+    if (bidAmountRef.current) {
+      // Convert bidAmount to a float or integer as needed
+      onBid({
+        auctionId: id,
+        amount: parseFloat(bidAmountRef.current.value.trim()),
+      })
+    }
   }
 
   // Mutation to reset an auction
@@ -147,19 +164,14 @@ const AuctionPage = ({ id }) => {
               <input
                 type="number"
                 className="amount w-[218px] rounded-lg border-1 border-[#CDCDCD] px-10"
-                defaultValue={bidAmount}
-                onChange={(e) => setBidAmount(parseInt(e.target.value))}
+                defaultValue={10}
+                ref={bidAmountRef} // Attach a ref to the input element
               />
               <div className="dollar-sign absolute left-4 top-3">$</div>
             </div>
             <button
               className="text-4xl font-bold text-caribbeanGreen hover:text-black"
-              onClick={() =>
-                onBid({
-                  auctionId: id,
-                  amount: bidAmount,
-                })
-              }
+              onClick={handleBidClick}
             >
               Bid
             </button>

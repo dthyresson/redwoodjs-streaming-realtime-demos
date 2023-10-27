@@ -171,7 +171,7 @@ const TableOfContentsPage = () => {
               Bedtime Story (Stream Directive with OpenAI Streaming)
             </h3>
 
-            <p>RedwoodJS also support the GraphQL Stream directive.</p>
+            <p>RedwoodJS also supports the GraphQL Stream directive.</p>
 
             <p>
               While Apollo Client does not support streaming, you can still try
@@ -231,7 +231,7 @@ const TableOfContentsPage = () => {
               Movie Mashup (Stream Directive with OpenAI Streaming)
             </h3>
 
-            <p>RedwoodJS also support the GraphQL Stream directive.</p>
+            <p>RedwoodJS also supports the GraphQL Stream directive.</p>
 
             <p>
               While Apollo Client does not support streaming, you can still try

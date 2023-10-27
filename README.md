@@ -166,7 +166,7 @@ context.pubSub.publish('newStory', id, story)
 
 ### Bedtime Story (Stream Directive with OpenAI Streaming)
 
-RedwoodJS also support the GraphQL Stream directive.
+RedwoodJS also supports the GraphQL Stream directive.
 
 While Apollo Client doesn't support streaming, you can still try out this example in GraphiQL:
 
@@ -196,7 +196,7 @@ context.liveQueryStore.invalidate(`MovieMashup:${id}`)
 
 ### Movie Mashup (Stream Directive with OpenAI Streaming)
 
-RedwoodJS also support the GraphQL Stream directive.
+RedwoodJS also supports the GraphQL Stream directive.
 
 While Apollo Client doesn't support streaming, you can still try out this example in GraphiQL:
 

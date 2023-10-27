@@ -19,6 +19,18 @@ const colorsManager = new Colors()
 const activitiesManager = new Activities()
 const adjectivesManager = new Adjectives()
 
+/**
+ * Usage in GraphiQL:
+ * query StreamStoryExample {
+ *  streamStory(input: {}) @stream
+ * }
+ */
+
+/** Usage in curl:
+ *
+ * curl -X POST -H "Content-Type: application/json" -d "{\"query\":\"query StreamStoryExample { streamStory(input: { }) @stream }\"}" http://localhost:8911/graphql
+ */
+
 export const streamStory = async ({ input }: { input: StoryInput }) => {
   const animal = animalsManager.get(input.animalId || '1')
   const color = colorsManager.get(input.colorId || '1')

@@ -11,15 +11,15 @@ const movieData = new Movies()
 
 /**
  * Usage in GraphiQL:
- *
- * streamMovieMashup(input: {firstMovieId: "11522-pretty-in-pink",
- *                          secondMovieId: "14370-real-genius"}) @stream
+ * query StreamMovieMashupExample {
+ *   streamMovieMashup(input: {firstMovieId: "11522-pretty-in-pink",
+ *                            secondMovieId: "14370-real-genius"}) @stream
  * }
  */
 
 /** Usage in curl:
  *
- * curl -X POST -H "Content-Type: application/json" -d "{\"query\":\"query StreamMashupExample { streamMovieMashup(input: { firstMovieId: \\\"11522-pretty-in-pink\\\", secondMovieId: \\\"14370-real-genius\\\" }) @stream }\"}" http://localhost:8911/graphql
+ * curl -X POST -H "Content-Type: application/json" -d "{\"query\":\"query StreamMovieMashupExample { streamMovieMashup(input: { firstMovieId: \\\"11522-pretty-in-pink\\\", secondMovieId: \\\"14370-real-genius\\\" }) @stream }\"}" http://localhost:8911/graphql
  */
 
 export const streamMovieMashup = async ({

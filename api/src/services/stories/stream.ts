@@ -21,9 +21,11 @@ const adjectivesManager = new Adjectives()
 
 /**
  * Usage in GraphiQL:
+ *
  * query StreamStoryExample {
  *  streamStory(input: {}) @stream
  * }
+ *
  */
 
 /** Usage in curl:

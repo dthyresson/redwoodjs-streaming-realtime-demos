@@ -168,6 +168,28 @@ const TableOfContentsPage = () => {
             </div>
 
             <h3 className="my-2 text-lg font-semibold leading-10">
+              Bedtime Story (Stream Directive with OpenAI Streaming)
+            </h3>
+
+            <p>RedwoodJS also supports the GraphQL Stream directive.</p>
+
+            <p>
+              While Apollo Client does not support streaming, you can still try
+              out this example in GraphiQL:
+            </p>
+
+            <pre
+              dangerouslySetInnerHTML={{
+                __html: `query StreamStoryExample { streamStory(input: {}) @stream }`,
+              }}
+            />
+
+            <p>
+              You can pass in an animal, color, adjective and activity -- or
+              random values will be used.
+            </p>
+
+            <h3 className="my-2 text-lg font-semibold leading-10">
               Movie Mashup (Live Query with OpenAI Streaming)
             </h3>
             <pre>
@@ -204,6 +226,31 @@ const TableOfContentsPage = () => {
                 <Icon name="github" /> View Code
               </a>
             </div>
+
+            <h3 className="my-2 text-lg font-semibold leading-10">
+              Movie Mashup (Stream Directive with OpenAI Streaming)
+            </h3>
+
+            <p>RedwoodJS also supports the GraphQL Stream directive.</p>
+
+            <p>
+              While Apollo Client does not support streaming, you can still try
+              out this example in GraphiQL:
+            </p>
+
+            <pre
+              dangerouslySetInnerHTML={{
+                __html: `query StreamMovieMashupExample {
+                  streamMovieMashup(input: {
+                    firstMovieId: "11522-pretty-in-pink",
+                    secondMovieId: "14370-real-genius"}) @stream
+                }`,
+              }}
+            />
+
+            <p>
+              You can pass in two movie ids -- or random values will be used.
+            </p>
           </div>
         </div>
         <div className="col-span-4 h-screen overflow-y-scroll bg-black pb-24 pt-[100px] text-center">

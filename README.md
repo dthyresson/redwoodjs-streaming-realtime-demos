@@ -164,6 +164,20 @@ The story updates on each stream content delta via a `newStory` subscription top
 context.pubSub.publish('newStory', id, story)
 ```
 
+### Bedtime Story (Stream Directive with OpenAI Streaming)
+
+RedwoodJS also supports the GraphQL Stream directive.
+
+While Apollo Client doesn't support streaming, you can still try out this example in GraphiQL:
+
+```graphql
+ query StreamStoryExample {
+  streamStory(input: {}) @stream
+ }
+```
+
+You can pass in an animal, color, adjective and activity -- or random values will be used.
+
 ### Movie Mashup (Live Query with OpenAI Streaming)
 
 > It's Out of Africa meets Pretty Woman.
@@ -179,6 +193,22 @@ Powered by OpenAI, this movie tagline and treatment updates on each stream conte
 ```ts
 context.liveQueryStore.invalidate(`MovieMashup:${id}`)
 ```
+
+### Movie Mashup (Stream Directive with OpenAI Streaming)
+
+RedwoodJS also supports the GraphQL Stream directive.
+
+While Apollo Client doesn't support streaming, you can still try out this example in GraphiQL:
+
+```graphql
+query StreamMovieMashupExample {
+  streamMovieMashup(input: {
+    firstMovieId: "11522-pretty-in-pink",
+    secondMovieId: "14370-real-genius"}) @stream
+}
+```
+
+You can pass in two movie ids -- or random values will be used.
 
 ## RedwoodJS Realtime Setup
 

@@ -21,10 +21,16 @@ export const schema = gql`
     secondMovieId: ID!
   }
 
+  input StreamMovieMashupInput {
+    firstMovieId: ID
+    secondMovieId: ID
+  }
+
   type Query {
     movies: [Movie!]! @skipAuth
     movie(id: ID!): Movie! @skipAuth
     movieMashup(input: MovieMashupInput!): MovieMashup! @skipAuth
+    streamMovieMashup(input: StreamMovieMashupInput!): [String!]! @skipAuth
   }
 
   type Mutation {

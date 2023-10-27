@@ -39,4 +39,6 @@ export const realtime: RedwoodRealtimeOptions = {
     // if using a Redis store
     // store: { redis: { publishClient, subscribeClient } },
   },
+  // To enable defer and streaming, set enableDeferStream to true.
+  enableDeferStream: true,
 }

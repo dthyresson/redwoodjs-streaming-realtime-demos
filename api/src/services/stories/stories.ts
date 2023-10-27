@@ -20,7 +20,7 @@ const colorsManager = new Colors()
 const activitiesManager = new Activities()
 const adjectivesManager = new Adjectives()
 
-const PROMPT = `Write a short children's bedtime story about an Animal that is a given Color and that does a given Activity.
+export const PROMPT = `Write a short children's bedtime story about an Animal that is a given Color and that does a given Activity.
 
 Give the animal a cute descriptive and memorable name.
 
@@ -29,7 +29,9 @@ The story should teach a lesson.
 The story should be told in a quality, style and feeling of the given Adjective.
 
 The story should be no longer than 3 paragraphs.
+`
 
+const MARKDOWN = `
 Format the story using Markdown.`
 
 export const tellStory = async (
@@ -49,7 +51,7 @@ export const tellStory = async (
       messages: [
         {
           role: 'system',
-          content: PROMPT,
+          content: PROMPT + MARKDOWN,
         },
         {
           role: 'user',

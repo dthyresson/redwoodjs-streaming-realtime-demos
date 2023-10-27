@@ -9,6 +9,10 @@ export class Movies {
     return this.movies.find((movie) => movie.id === id)
   }
 
+  random(): Movie {
+    return this.movies[Math.floor(Math.random() * this.movies.length)]
+  }
+
   all(): Movie[] {
     return this.movies.sort((a, b) => a.title.localeCompare(b.title))
   }

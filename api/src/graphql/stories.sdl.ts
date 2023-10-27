@@ -44,5 +44,6 @@ export const schema = gql`
     colors: [Color!]! @skipAuth
     activities: [Activity!]! @skipAuth
     adjectives: [Adjective!]! @skipAuth
+    streamStory(input: StoryInput!): [String!]! @skipAuth
   }
 `

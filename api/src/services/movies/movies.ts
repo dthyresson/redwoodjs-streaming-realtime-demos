@@ -26,14 +26,16 @@ const getMovies = (input: MovieMashupInput) => {
   return { id, firstMovie, secondMovie }
 }
 
-const PROMPT = `
+export const PROMPT = `
 Propose a short new movie treatment in the style of a movie trailer advertisement voice over
 by mashing up the plots, characters, their names, and themes of two existing movies.
 
 Give the new movie a title and tagline that could be used on a movie poster.
 
 The treatment should be no longer than 3 sentences.
+`
 
+const MARKDOWN = `
 Return the title, tagline, and treatment of the new movie as text with labels:
 Title, Tagline, and Treatment and format as markdown where the title is a heading, tagline is a subheading and treatment uses bold for emphasis on some exciting words.
 `
@@ -54,7 +56,7 @@ export const mashupMovies = async (
       messages: [
         {
           role: 'system',
-          content: PROMPT,
+          content: PROMPT + MARKDOWN,
         },
         {
           role: 'user',

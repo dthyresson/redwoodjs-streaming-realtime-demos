@@ -27,6 +27,10 @@ export class Animals {
     return this.animals.find((animal) => animal.id === id)
   }
 
+  random(): Animal {
+    return this.animals[Math.floor(Math.random() * this.animals.length)]
+  }
+
   all(): Animal[] {
     return this.animals.sort((a, b) => a.name.localeCompare(b.name))
   }
@@ -37,6 +41,10 @@ export class Colors {
 
   get(id: string): Color | undefined {
     return this.colors.find((color) => color.id === id)
+  }
+
+  random(): Color {
+    return this.colors[Math.floor(Math.random() * this.colors.length)]
   }
 
   all(): Color[] {
@@ -51,6 +59,10 @@ export class Activities {
     return this.activities.find((activity) => activity.id === id)
   }
 
+  random(): Activity {
+    return this.activities[Math.floor(Math.random() * this.activities.length)]
+  }
+
   all(): Activity[] {
     return this.activities.sort((a, b) => a.name.localeCompare(b.name))
   }
@@ -61,6 +73,10 @@ export class Adjectives {
 
   get(id: string): Adjective | undefined {
     return this.adjectives.find((adjective) => adjective.id === id)
+  }
+
+  random(): Adjective {
+    return this.adjectives[Math.floor(Math.random() * this.adjectives.length)]
   }
 
   all(): Adjective[] {

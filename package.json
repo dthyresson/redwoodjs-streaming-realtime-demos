@@ -7,8 +7,8 @@
     ]
   },
   "devDependencies": {
-    "@redwoodjs/cli-storybook": "7.0.0-canary.227",
-    "@redwoodjs/core": "7.0.0-canary.227",
+    "@redwoodjs/cli-storybook": "7.0.0-canary.404",
+    "@redwoodjs/core": "7.0.0-canary.404",
     "prettier-plugin-tailwindcss": "^0.4.1"
   },
   "eslintConfig": {
@@ -22,5 +22,8 @@
   "prisma": {
     "seed": "yarn rw exec seed"
   },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@3.6.1",
+  "dependencies": {
+    "@graphql-inspector/cli": "^4.0.2"
+  }
 }

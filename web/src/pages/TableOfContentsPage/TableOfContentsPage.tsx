@@ -41,14 +41,16 @@ const TableOfContentsPage = () => {
             </p>
             <h2>What is RedwoodJS Realtime?</h2>
             <p>
-              RedwoodJS Realime is a real-time solution for for GraphQL over
+              RedwoodJS Realtime is a real-time solution for for GraphQL over
               Server-Sent Events.
             </p>
             <p>
-              Redwood offers two options for real-time updates:{' '}
-              <strong>live queries</strong> and <strong>subscriptions</strong>.
-              Subscriptions are part of the GraphQL specification, whereas live
-              queries are not.
+              Redwood offers several options for real-time updates:{' '}
+              <strong>live queries</strong>, <strong>subscriptions</strong>, as
+              well as <strong>stream</strong> and <strong>defer</strong>{' '}
+              directives. Subscriptions are part of the GraphQL specification,
+              whereas live queries are not. Stream and Defer are experimental
+              GraphQL features and not yet stable.
             </p>
             <p>
               There are times where subscriptions are well-suited for a realtime

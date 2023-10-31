@@ -8,7 +8,7 @@ The answer is: **now**.
 
 The real-time solution for RedwoodJS is initially for GraphQL.
 
-In GraphQL, there are two options for real-time updates: **live queries** and **subscriptions**. Subscriptions are part of the GraphQL specification, whereas live queries are not.
+In GraphQL, there are several options for real-time updates: **live queries**, **subscriptions**, as well as then **stream** and**defer** directives . Subscriptions are part of the GraphQL specification, whereas live queries are not. Stream and Defer are experimental GraphQL features and not yet stable.
 
 There are times where subscriptions are well-suited for a realtime problem — and in some cases live queries may be a better fit. Later we’ll explore the pros and cons of each approach and how best to decide that to use and when.
 

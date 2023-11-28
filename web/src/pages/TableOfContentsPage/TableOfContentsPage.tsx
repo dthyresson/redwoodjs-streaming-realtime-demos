@@ -41,7 +41,7 @@ const TableOfContentsPage = () => {
             </p>
             <h2>What is RedwoodJS Realtime?</h2>
             <p>
-              RedwoodJS Realtime is a real-time solution for for GraphQL over
+              RedwoodJS Realtime is a real-time solution for GraphQL over
               Server-Sent Events.
             </p>
             <p>
